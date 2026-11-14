@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "DAYMARK — Personal Operating System",
+  "name": "DAYMARK 3.1 — Focus & Reminders",
   "short_name": "DAYMARK",
-  "description": "Không gian cá nhân để quản lý công việc, mục tiêu, thói quen, tri thức và sự tập trung.",
+  "description": "Personal OS với chế độ tập trung toàn màn hình và nhắc việc.",
   "lang": "vi",
   "start_url": "./index.html",
   "scope": "./",

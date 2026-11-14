@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
-<title>DAYMARK — Your personal operating system</title>
+<title>DAYMARK 3.1 — Focus & Reminders</title>
 <style>
 :root{--bg:#f4f5f9;--surface:#fff;--surface2:#f8f9fc;--ink:#202338;--muted:#8b90a5;--line:#eceef4;--nav:#191c30;--nav2:#242840;--purple:#7667ee;--purple2:#eeeaff;--orange:#ff9b70;--green:#41b995;--blue:#65a8f5;--red:#ed777d;--yellow:#e9bb58;--shadow:0 14px 40px rgba(31,35,61,.07);--radius:20px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #c9c2ff;outline-offset:2px}button:disabled{opacity:.5;cursor:not-allowed}.app{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr)}
@@ -130,6 +130,58 @@ body.dark .skill-track{background:#343951}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
+
+/* DAYMARK 3.0 cloud + AI experience */
+.cloud-panel{border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:17px;margin-bottom:16px}
+.cloud-status{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:6px 10px;background:var(--surface2);color:var(--muted);font-size:11px;font-weight:700}
+.cloud-dot{width:8px;height:8px;border-radius:50%;background:#a1a1aa}.cloud-dot.ok{background:#22a879}.cloud-dot.warn{background:#e0a33f}
+.ai-consent{display:flex;align-items:flex-start;gap:9px;border:1px solid var(--line);background:var(--surface2);padding:12px;border-radius:13px;font-size:11px;line-height:1.55;color:var(--muted)}
+.ai-consent input,.ai-scope input{accent-color:var(--purple);width:16px;height:16px;flex:0 0 auto;margin:1px 0 0}
+.ai-scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}
+.ai-scope label{display:flex;align-items:flex-start;gap:8px;padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--surface2);font-size:11px;line-height:1.4;cursor:pointer}
+.ai-mode-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;align-items:end}
+.ai-chat-log{display:grid;gap:10px;margin-top:14px}.ai-message{max-width:100%;border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface2);font-size:12px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}.ai-message.user{margin-left:auto;background:var(--purple2);border-color:#d8d0ff}.ai-message.assistant{margin-right:auto}.ai-message .ai-role{font-size:9px;font-weight:800;letter-spacing:1px;color:var(--muted);display:block;margin-bottom:5px}
+.ai-progress{display:none;align-items:center;gap:8px;color:var(--muted);font-size:11px;padding:8px 2px}.ai-progress.on{display:flex}.ai-spinner{width:13px;height:13px;border:2px solid var(--line);border-top-color:var(--purple);border-radius:50%;animation:dmspin .8s linear infinite}@keyframes dmspin{to{transform:rotate(360deg)}}
+.cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.cloud-actions button{flex:0 0 auto}
+@media(max-width:820px){#cloudAccountBtn{font-size:10px;padding:8px 9px}.ai-mode-row{grid-template-columns:1fr}.cloud-panel{padding:14px}}
+
+
+/* DAYMARK 3.1 — immersive focus + task reminders */
+#focusOverlay{position:fixed;inset:0;z-index:9999;display:none;width:100vw;height:100vh;height:100dvh;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 50% 34%,#34356d 0%,#171a31 46%,#090d1b 100%);padding:calc(env(safe-area-inset-top,0px) + 16px) 22px calc(env(safe-area-inset-bottom,0px) + 16px);isolation:isolate}
+#focusOverlay.active{display:grid;grid-template-rows:auto 1fr auto;align-items:center}
+#focusOverlay:before,#focusOverlay:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1}
+#focusOverlay:before{opacity:.35;background-image:radial-gradient(2px 2px at 12% 21%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 82% 16%,#c6c7ff 50%,transparent 60%),radial-gradient(2px 2px at 72% 72%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 23% 78%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 55% 9%,#fff 50%,transparent 60%),radial-gradient(1px 1px at 91% 51%,#fff 50%,transparent 60%);background-size:100% 100%}
+#focusOverlay:after{background:radial-gradient(circle at 50% 48%,#8c7aff20,transparent 34%),linear-gradient(180deg,transparent 62%,#080b18a8)}
+.focus-overlay-top{display:flex;justify-content:space-between;align-items:center;gap:12px;position:relative;z-index:2}
+.focus-overlay-brand{font-size:11px;letter-spacing:3px;font-weight:900;color:#c9c4ff}.focus-overlay-brand small{display:block;font-size:8px;letter-spacing:2px;color:#7e83a7;margin-top:5px}
+.focus-overlay-exit{width:42px;height:42px;border:1px solid #ffffff28;background:#ffffff0d;color:#fff;border-radius:50%;font-size:21px;display:grid;place-items:center}
+.focus-overlay-center{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:0;gap:12px;position:relative}
+.focus-overline{font-size:10px;font-weight:850;letter-spacing:4px;color:#bcb6ff;text-transform:uppercase}
+.focus-overlay-title{font-size:clamp(17px,3vw,22px);font-weight:700;color:#f6f4ff;max-width:min(86vw,650px);overflow-wrap:anywhere;margin:0}
+.focus-orb{--focus-progress:0deg;width:min(66vw,310px);height:min(66vw,310px);max-width:310px;max-height:310px;min-width:220px;min-height:220px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(from -90deg,#aaa0ff var(--focus-progress),#ffffff18 0);box-shadow:0 0 55px #8576ff30,0 0 120px #5c57d320;}
+.focus-orb:before{content:"";position:absolute;inset:9px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#30335e,#171a32 68%,#101327);border:1px solid #ffffff16;box-shadow:inset 0 0 40px #070a1b}
+.focus-orb-inner{position:relative;z-index:1;display:grid;gap:4px;justify-items:center}
+.focus-overlay-time{font:800 clamp(48px,12vw,74px)/1 'Manrope',system-ui,sans-serif;letter-spacing:-4px;font-variant-numeric:tabular-nums;color:#fff;text-shadow:0 0 28px #aaa0ff55}
+.focus-time-caption{font-size:9px;letter-spacing:3px;color:#9ea2c1;font-weight:800}
+.focus-motto{font-size:12px;line-height:1.7;color:#b9bdd7;max-width:340px;margin:3px auto 0}
+.focus-overlay-bottom{display:grid;gap:12px;justify-items:center;position:relative;z-index:2}
+.focus-overlay-controls{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;width:100%}
+.focus-big-btn{border:0;border-radius:15px;padding:14px 24px;min-width:148px;background:linear-gradient(135deg,#fff,#dcd7ff);color:#29264d;font-weight:900;box-shadow:0 8px 28px #9d91ff35}
+.focus-ghost-btn{border:1px solid #ffffff35;border-radius:14px;padding:13px 16px;background:#ffffff0b;color:#f0efff;font-weight:700}
+.focus-system-note{font-size:10px;line-height:1.5;color:#9298b8;text-align:center;max-width:430px}
+.focus-status{display:inline-flex;align-items:center;gap:7px;font-size:10px;color:#b8b5e8;background:#ffffff0b;border:1px solid #ffffff17;padding:7px 11px;border-radius:999px}
+.focus-status i{width:7px;height:7px;border-radius:50%;background:#62d4a5;box-shadow:0 0 12px #62d4a5}
+.focus-complete-mark{font-size:35px;filter:drop-shadow(0 0 18px #b4a6ff88)}
+.focus-complete-title{font-size:clamp(25px,6vw,38px);font-weight:900;letter-spacing:-1px;margin:0;color:white}
+.focus-complete-copy{max-width:340px;color:#bfc2dc;font-size:12px;line-height:1.65}
+.reminder-hero{background:linear-gradient(120deg,#202540,#34345f 60%,#4f477f);color:white;border-radius:20px;padding:20px;margin-bottom:15px}
+.reminder-hero h2{margin:0 0 7px;font-size:19px}.reminder-hero p{margin:0;color:#c5c7dd;font-size:12px;line-height:1.65;max-width:760px}
+.reminder-item{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--line)}.reminder-item:last-child{border-bottom:0}.reminder-clock{width:40px;height:40px;border-radius:13px;background:#efedff;color:#7162de;display:grid;place-items:center;font-size:18px;flex:0 0 auto}.reminder-copy{min-width:0;flex:1}.reminder-name{font-size:12px;font-weight:750;overflow-wrap:anywhere}.reminder-meta{font-size:10px;color:var(--muted);margin-top:4px}.reminder-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.reminder-state{font-size:9px;border-radius:999px;background:#f0efff;color:#7566dc;padding:4px 8px;font-weight:800}
+.focus-safety-note{background:#fff8eb;border:1px solid #f5e7c8;color:#78613a;border-radius:13px;padding:12px;font-size:11px;line-height:1.65;margin-top:13px}
+body.dark .focus-safety-note{background:#332c20;border-color:#51432d;color:#e8d4ac}
+@media(max-width:600px){#focusOverlay{padding-left:17px;padding-right:17px}.focus-orb{width:72vw;height:72vw;min-width:220px;min-height:220px}.focus-overlay-time{font-size:clamp(48px,13vw,66px)}.focus-overlay-controls{gap:7px}.focus-big-btn{flex:1;min-width:130px}.focus-ghost-btn{padding:13px 12px}.reminder-item{align-items:flex-start}.reminder-actions{flex-direction:column}}
+@media(display-mode:standalone){#focusOverlay{padding-top:calc(env(safe-area-inset-top,0px) + 20px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 20px)}}
+
 </style>
 </head>
 <body>
@@ -144,7 +196,8 @@ body.dark .skill-track{background:#343951}
       <button data-page="habits"><span class="nav-ico">✳</span><span>Thói quen</span></button>
       <button data-page="goals"><span class="nav-ico">◎</span><span>Mục tiêu</span></button>
       <button data-page="focus"><span class="nav-ico">◷</span><span>Tập trung</span></button>
-      <button data-page="coach"><span class="nav-ico">✦</span><span>AI Coach</span></button>
+      <button data-page="reminders"><span class="nav-ico">♧</span><span>Nhắc việc</span><span class="nav-count" id="navReminderCount">0</span></button>
+      <button data-page="coach"><span class="nav-ico">✦</span><span>Trợ lý</span></button>
       <button data-page="rpg"><span class="nav-ico">⚔</span><span>Life RPG</span></button>
       <button data-page="brain"><span class="nav-ico">▤</span><span>Second Brain</span></button>
       <button data-page="journal"><span class="nav-ico">✎</span><span>Nhật ký</span></button>
@@ -156,11 +209,13 @@ body.dark .skill-track{background:#343951}
     <div class="profile"><div class="avatar">Y</div><div><div class="profile-name" id="profileName">Người kiến tạo</div><div class="profile-level" id="profileLevel">Level 1 · Khởi đầu</div></div><button class="profile-more" data-goto="settings">···</button></div>
   </aside>
   <main class="main">
-    <header class="topbar"><div class="crumb">DAYMARK <span style="color:#c5c8d3"> / </span> <b id="crumbPage">Tổng quan</b></div><div class="top-actions"><button class="icon-btn" id="searchBtn" title="Tìm kiếm ( / )">⌕</button><button class="icon-btn" id="themeBtn" title="Đổi giao diện">◐</button><button class="primary-btn" id="globalAdd">＋ Tạo mới</button></div></header>
+    <header class="topbar"><div class="crumb">DAYMARK <span style="color:#c5c8d3"> / </span> <b id="crumbPage">Tổng quan</b></div><div class="top-actions"><button class="soft-btn" id="cloudAccountBtn" type="button" title="Tài khoản và đồng bộ">☁ Kết nối</button><button class="icon-btn" id="searchBtn" title="Tìm kiếm ( / )">⌕</button><button class="icon-btn" id="themeBtn" title="Đổi giao diện">◐</button><button class="primary-btn" id="globalAdd">＋ Tạo mới</button></div></header>
     <div id="view"></div>
   </main>
 </div>
-<div id="modalRoot"></div><div id="toastRoot"></div>
+<div id="focusOverlay" aria-hidden="true"></div><div id="modalRoot"></div><div id="toastRoot"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
 <script>
 (()=>{
 'use strict';
@@ -212,7 +267,7 @@ if(!state.rpg||typeof state.rpg!=='object')state.rpg={coins:0,claimed:{},redeeme
 if(!state.rpg.claimed)state.rpg.claimed={};
 if(!Array.isArray(state.rpg.redeemed))state.rpg.redeemed=[];
 let currentPage=state.page||'dashboard',taskFilter='today',taskSearch='',plannerOffset=0,timerMode=25*60,timerLeft=25*60,timerRunning=false,timerInterval=null,sessionStarted=0,timerDeadline=0,brainQuery='',brainFolder='Tất cả',coachQuestion='',coachReply='';
-const pageNames={dashboard:'Tổng quan',tasks:'Công việc',planner:'Lịch tuần',habits:'Thói quen',goals:'Mục tiêu',focus:'Tập trung',coach:'AI Life Coach',rpg:'Life RPG',brain:'Second Brain',journal:'Nhật ký',insights:'Phân tích thông minh',settings:'Cài đặt & dữ liệu'};
+const pageNames={dashboard:'Tổng quan',tasks:'Công việc',planner:'Lịch tuần',habits:'Thói quen',goals:'Mục tiêu',focus:'Tập trung',reminders:'Nhắc việc',coach:'Trợ lý cục bộ',rpg:'Life RPG',brain:'Second Brain',journal:'Nhật ký',insights:'Phân tích thông minh',settings:'Cài đặt & dữ liệu'};
 function save(){
   state.page=currentPage;
   try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
@@ -232,13 +287,13 @@ function streak(){let n=0,d=today();if(!state.habits.some(h=>habitDone(h,d)))d=d
 function updateChrome(){
   $('#crumbPage').textContent=pageNames[currentPage]||'Tổng quan';
   $$('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===currentPage));
-  const open=state.tasks.filter(t=>!t.completed).length;$('#navTaskCount').textContent=open;
+  const open=state.tasks.filter(t=>!t.completed).length;$('#navTaskCount').textContent=open;const reminderCount=(state.tasks||[]).filter(t=>t.reminderAt&&!t.completed).length;const rb=$('#navReminderCount');if(rb)rb.textContent=reminderCount;
   $('#profileName').textContent=state.userName||'Người kiến tạo';$('#profileLevel').textContent=`Level ${level()} · ${levelName()}`;
   const q=Math.min(3,doneToday()+allHabitDone());$('#questProgress').textContent=`${q}/3` ;$('#questBar').style.width=(q/3*100)+'%';
 }
 function setPage(p){currentPage=p;save();render()}
 function pageHead(kicker,title,sub,action=''){return `<div class="page-head"><div><div class="eyebrow">${kicker}</div><h1 class="page-title">${title}</h1><p class="page-sub">${sub}</p></div>${action}</div>`}
-function taskCard(t,showActions=true){return `<div class="task-row ${t.completed?'completed':''}" data-task="${t.id}"><button class="task-check ${t.completed?'done':''}" data-action="toggle-task" data-id="${t.id}" aria-label="Hoàn thành">${t.completed?'✓':''}</button><div class="task-copy"><div class="task-name">${esc(t.title)}</div><div class="task-detail"><span class="priority ${t.priority}"></span>${esc(t.area||'Khác')} <span>·</span> ${t.due===today()?'Hôm nay':fmt(t.due)} <span>·</span> ${t.estimate||25} phút</div></div>${showActions?`<div class="task-actions"><button class="mini-action" data-action="edit-task" data-id="${t.id}" title="Sửa">✎</button><button class="mini-action" data-action="delete-task" data-id="${t.id}" title="Xóa">×</button></div>`:''}</div>`}
+function taskCard(t,showActions=true){const reminder=t.reminderAt?`<span class="tag" style="background:#fff0e5;color:#b56a37">⏰ ${esc(localDateTimeLabel(t.reminderAt))}</span>`:'';return `<div class="task-row ${t.completed?'completed':''}" data-task="${t.id}"><button class="task-check ${t.completed?'done':''}" data-action="toggle-task" data-id="${t.id}" aria-label="Hoàn thành">${t.completed?'✓':''}</button><div class="task-copy"><div class="task-name">${esc(t.title)}</div><div class="task-detail"><span class="priority ${t.priority}"></span>${esc(t.area||'Khác')} <span>·</span> ${t.due===today()?'Hôm nay':fmt(t.due)} <span>·</span> ${t.estimate||25} phút ${reminder}</div></div>${showActions?`<div class="task-actions"><button class="mini-action" data-action="edit-task" data-id="${t.id}" title="Sửa">✎</button><button class="mini-action" data-action="delete-task" data-id="${t.id}" title="Xóa">×</button></div>`:''}</div>`}
 function goalMini(g){return `<div class="goal-row"><div class="goal-top"><span class="goal-name">${esc(g.icon)} ${esc(g.title)}</span><span class="goal-percent">${g.progress}%</span></div><div class="bar"><span style="width:${g.progress}%"></span></div><div class="goal-bottom"><span>Hạn ${fmt(g.deadline)}</span><span>${g.milestones.filter(m=>m.done).length}/${g.milestones.length} cột mốc</span></div></div>`}
 function renderDashboard(){
  const tasks=todayTasks(),done=tasks.filter(t=>t.completed).length,pct=tasks.length?Math.round(done/tasks.length*100):0;
@@ -263,10 +318,70 @@ function renderTasks(){const tasks=state.tasks.filter(t=>{if(taskFilter==='today
 function renderPlanner(){const base=dateAdd(today(),plannerOffset*7);const start=dateAdd(base,-((dateObj(base).getDay()+6)%7));const end=dateAdd(start,6);return `<div class="page">${pageHead('SEE THE BIG PICTURE','Lịch tuần','Nhìn lịch trình như một bản đồ — không phải một danh sách để tự gây áp lực.','<button class="primary-btn" data-action="add-task">＋ Thêm việc</button>')}<div class="card"><div class="planner-head"><div><div class="card-title">${fmt(start,{day:'numeric',month:'long'})} — ${fmt(end,{day:'numeric',month:'long',year:'numeric'})}</div><div class="card-meta" style="margin-top:4px">${plannerOffset===0?'Tuần hiện tại':plannerOffset<0?`${Math.abs(plannerOffset)} tuần trước`:`${plannerOffset} tuần tới`}</div></div><div class="toolbar"><button class="icon-btn" data-action="week-prev">‹</button><button class="soft-btn" data-action="week-today">Hôm nay</button><button class="icon-btn" data-action="week-next">›</button></div></div><div class="week-grid">${Array.from({length:7},(_,i)=>{const d=dateAdd(start,i),arr=state.tasks.filter(t=>t.due===d);return `<div class="week-day ${d===today()?'today':''}"><div class="week-day-head"><span>${['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ nhật'][i]}</span><strong>${dateObj(d).getDate()}</strong></div>${arr.map(t=>`<div class="week-event ${t.completed?'done':''}" data-action="edit-task" data-id="${t.id}" title="${esc(t.title)}">${esc(t.title)}</div>`).join('')}<button class="week-add" data-action="add-task-date" data-date="${d}">＋ Thêm</button></div>`}).join('')}</div></div><div class="card" style="margin-top:16px"><div class="card-head"><div class="card-title">Gợi ý lập lịch thông minh</div><span class="card-meta">Một nguyên tắc đơn giản</span></div><div class="grid" style="grid-template-columns:repeat(3,1fr);gap:12px"><div style="background:#f7f5ff;border-radius:12px;padding:13px"><b style="font-size:11px">① Chọn MIT</b><p class="card-meta" style="line-height:1.5">Chọn tối đa 3 việc quan trọng nhất trong ngày.</p></div><div style="background:#fff6ef;border-radius:12px;padding:13px"><b style="font-size:11px">② Chừa khoảng thở</b><p class="card-meta" style="line-height:1.5">Đừng lấp đầy 100% lịch. Dự phòng thời gian nghỉ.</p></div><div style="background:#effaf5;border-radius:12px;padding:13px"><b style="font-size:11px">③ Review cuối ngày</b><p class="card-meta" style="line-height:1.5">Điều chỉnh kế hoạch, không phán xét bản thân.</p></div></div></div></div>`}
 function renderHabits(){const days=Array.from({length:7},(_,i)=>dateAdd(today(),i-6));return `<div class="page">${pageHead('SMALL STEPS, BIG CHANGE','Xây dựng thói quen','Bạn không cần chờ có động lực. Hãy làm cho hành động tốt trở nên dễ bắt đầu.','<button class="primary-btn" data-action="add-habit">＋ Thêm thói quen</button>')}<div class="stats-grid"><div class="stat-card"><div class="stat-ico" style="background:#fff0e6">🔥</div><div><div class="stat-value">${streak()} ngày</div><div class="stat-label">Chuỗi hiện tại</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#e8e5ff">✳</div><div><div class="stat-value">${allHabitDone()}</div><div class="stat-label">Đã hoàn thành hôm nay</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#e4f6ee">🌿</div><div><div class="stat-value">${state.habits.length}</div><div class="stat-label">Thói quen đang theo dõi</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#e9f3ff">✦</div><div><div class="stat-value">+10 XP</div><div class="stat-label">Mỗi thói quen / ngày</div></div></div></div><div class="card"><div class="card-head"><div><div class="card-title">Bảng kiểm 7 ngày</div><div class="card-meta" style="margin-top:4px">Chạm vào ô để cập nhật trạng thái của ngày tương ứng.</div></div><span class="card-meta">Tuần gần nhất</span></div><div class="habit-grid"><div></div>${days.map(d=>`<div class="habit-grid-head">${dayNames[dateObj(d).getDay()]}<br>${dateObj(d).getDate()}</div>`).join('')}${state.habits.map(h=>`<div class="habit-grid-name"><span>${esc(h.icon)}</span><span>${esc(h.name)}</span></div>${days.map(d=>`<button class="habit-cell ${habitDone(h,d)?'on':''} ${d===today()?'today':''}" data-action="toggle-habit-date" data-id="${h.id}" data-date="${d}" title="${fmt(d)}">${habitDone(h,d)?'✓':''}</button>`).join('')}`).join('')}</div></div><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px">${state.habits.map(h=>`<div class="card"><div class="goal-card-head"><div class="habit-left"><div class="habit-icon" style="background:${h.color||'#f0edff'}">${esc(h.icon)}</div><div><div class="habit-name">${esc(h.name)}</div><div class="habit-sub">${Object.values(h.history||{}).filter(Boolean).length} lần đã ghi nhận</div></div></div><button class="mini-action" data-action="delete-habit" data-id="${h.id}" title="Xóa">×</button></div><div class="divider"></div><div class="goal-bottom"><span>Hôm nay</span><b style="color:${habitDone(h)?'var(--green)':'var(--muted)'}">${habitDone(h)?'Đã hoàn thành':'Chưa thực hiện'}</b></div><button class="soft-btn" style="width:100%;margin-top:12px" data-action="toggle-habit" data-id="${h.id}">${habitDone(h)?'Bỏ đánh dấu':'✓ Hoàn thành hôm nay'}</button></div>`).join('')}</div></div>`}
 function renderGoals(){return `<div class="page">${pageHead('YOUR NORTH STAR','Mục tiêu & cột mốc','Một mục tiêu rõ ràng sẽ giúp bạn biết hôm nay nên dành năng lượng cho điều gì.','<button class="primary-btn" data-action="add-goal">＋ Tạo mục tiêu</button>')}<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:15px">${state.goals.map(g=>`<div class="card goal-card"><div class="goal-card-head"><div class="goal-icon">${esc(g.icon)}</div><button class="mini-action" data-action="edit-goal" data-id="${g.id}" title="Sửa">✎</button></div><h3>${esc(g.title)}</h3><p>${esc(g.why)}</p><div class="goal-top"><span class="card-meta">Tiến độ</span><span class="goal-percent">${g.progress}%</span></div><div class="bar"><span style="width:${g.progress}%"></span></div><div class="goal-bottom"><span>Hạn: ${fmt(g.deadline)}</span><span>${g.milestones.filter(m=>m.done).length}/${g.milestones.length} mốc</span></div><div class="divider"></div><div class="card-meta" style="font-weight:800;margin-bottom:5px">CỘT MỐC</div>${g.milestones.map((m,i)=>`<label class="milestone"><input type="checkbox" data-action="toggle-milestone" data-id="${g.id}" data-index="${i}" ${m.done?'checked':''}> <span style="${m.done?'text-decoration:line-through;color:#a4a8b6':''}">${esc(m.text)}</span></label>`).join('')}<div class="goal-card-actions"><button class="soft-btn" style="flex:1" data-action="edit-goal" data-id="${g.id}">Chỉnh sửa</button><button class="soft-btn danger" data-action="delete-goal" data-id="${g.id}">Xóa</button></div></div>`).join('')||'<div class="empty">Bắt đầu với một điều thật sự quan trọng với bạn.</div>'}</div><div class="card" style="margin-top:17px;background:linear-gradient(120deg,#f5f2ff,#fff)"><div style="font:750 14px 'Manrope'">💡 Biến mục tiêu thành hệ thống</div><p class="card-meta" style="line-height:1.6;max-width:760px">Đừng chỉ viết “giỏi tiếng Anh” hay “giỏi lập trình”. Hãy biến nó thành hành vi nhìn thấy được: 20 phút luyện nghe, 1 bài DSA tự giải, 1 trang ghi chú. Mục tiêu cho bạn hướng đi; thói quen đưa bạn tới đó.</p></div></div>`}
-function renderFocus(){const mins=state.sessions.filter(s=>s.date===today()).reduce((a,s)=>a+s.minutes,0);const recent=state.sessions.slice().reverse().slice(0,6);const pct=Math.max(0,Math.min(100,(timerMode-timerLeft)/timerMode*100));return `<div class="page">${pageHead('DEEP WORK ZONE','Phòng tập trung','Tạo một khoảng thời gian đủ yên để làm việc quan trọng — một việc tại một thời điểm.')}<div class="focus-layout"><section class="focus-main"><div class="focus-label">✦ DEEP WORK SESSION</div><div class="timer" id="timerDisplay">${String(Math.floor(timerLeft/60)).padStart(2,'0')}:${String(timerLeft%60).padStart(2,'0')}</div><div class="timer-sub" id="timerSub">${timerRunning?'Bạn đang ở trong phiên tập trung':'Bắt đầu khi bạn đã sẵn sàng'}</div><div class="timer-progress"><span id="timerProgress" style="width:${pct}%"></span></div><div class="timer-modes"><button data-minutes="15" class="${timerMode===900?'active':''}">15 phút</button><button data-minutes="25" class="${timerMode===1500?'active':''}">25 phút</button><button data-minutes="45" class="${timerMode===2700?'active':''}">45 phút</button><button data-minutes="60" class="${timerMode===3600?'active':''}">60 phút</button></div><div style="height:18px"></div><div class="timer-controls"><button class="timer-start" id="timerToggle">${timerRunning?'Tạm dừng':'Bắt đầu tập trung'}</button><button class="timer-secondary" id="timerReset">Đặt lại</button></div><div class="tiny-note" style="margin-top:16px;color:#aeb0c8">Kết thúc phiên: +${Math.max(5,Math.round(timerMode/60))} XP · Nghỉ ngắn giữa các phiên</div></section><div class="stack"><section class="card"><div class="card-head"><div class="card-title">📈 Hôm nay</div><span class="card-meta">Tổng thời gian</span></div><div class="insight-number">${mins} <span style="font-size:14px;color:var(--muted)">phút</span></div><div class="insight-copy">${state.sessions.filter(s=>s.date===today()).length} phiên đã hoàn thành</div><div class="bar" style="margin-top:14px"><span style="width:${Math.min(100,mins/120*100)}%"></span></div><div class="goal-bottom"><span>Mục tiêu gợi ý: 120 phút</span><span>${Math.round(mins/120*100)}%</span></div></section><section class="card"><div class="card-head"><div class="card-title">🕯️ Phiên gần đây</div><span class="card-meta">${state.sessions.length} phiên tổng</span></div>${recent.map(s=>`<div class="focus-session"><div><b>${s.minutes} phút</b><div class="card-meta" style="margin-top:3px">${esc(s.label||'Tập trung')}</div></div><span>${fmt(s.date)} · ${s.time||''}</span></div>`).join('')||'<div class="empty">Phiên tập trung đầu tiên đang chờ bạn.</div>'}</section></div></div></div>`}
-function renderJournal(){return `<div class="page">${pageHead('REFLECT & RESET','Nhật ký cá nhân','Ghi lại điều bạn học được, điều khiến bạn biết ơn và điều muốn làm tốt hơn.','<button class="primary-btn" data-action="add-journal">＋ Viết nhật ký</button>')}<div class="card" style="margin-bottom:15px;background:linear-gradient(120deg,#fff8f0,#fff)"><div style="font:750 14px 'Manrope'">Một câu hỏi để suy ngẫm hôm nay</div><div style="font:600 13px 'Manrope';margin-top:8px;color:#6a5b52">“Hôm nay mình đã làm điều gì, dù nhỏ, để tiến gần hơn tới con người mình muốn trở thành?”</div></div><div class="journal-grid">${state.journal.slice().reverse().map(j=>`<article class="journal-entry"><div style="display:flex;justify-content:space-between;gap:10px"><h4>${esc(j.title||'Ghi chú trong ngày')}</h4><button class="mini-action" data-action="delete-journal" data-id="${j.id}">×</button></div><p>${esc(j.text)}</p><small>${fmt(j.date,{weekday:'long',day:'numeric',month:'long'})} · ${esc(j.mood||'')}</small></article>`).join('')||'<div class="empty" style="grid-column:1/-1"><div class="empty-ico">📝</div>Trang giấy đầu tiên vẫn còn trắng. Viết vài dòng cho chính mình nhé.</div>'}</div></div>`}
-function renderInsights(){const last=Array.from({length:7},(_,i)=>dateAdd(today(),i-6));const mins=last.map(d=>state.sessions.filter(s=>s.date===d).reduce((a,s)=>a+s.minutes,0));const max=Math.max(60,...mins);const completed=state.tasks.filter(t=>t.completed).length;const all=state.tasks.length;const doneHabits=state.habits.reduce((a,h)=>a+Object.values(h.history||{}).filter(Boolean).length,0);return `<div class="page">${pageHead('NOTICE YOUR GROWTH','Thống kê tiến trình','Dữ liệu không dùng để phán xét bạn. Nó giúp bạn nhìn thấy điều gì đang hiệu quả.')}<div class="stats-grid"><div class="stat-card"><div class="stat-ico" style="background:#e9e5ff">✦</div><div><div class="stat-value">${state.xp||0}</div><div class="stat-label">Tổng XP tích lũy</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#e2f6ed">✓</div><div><div class="stat-value">${completed}</div><div class="stat-label">Công việc hoàn thành</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#fff0e4">◷</div><div><div class="stat-value">${Math.round(state.sessions.reduce((a,s)=>a+s.minutes,0)/60*10)/10}h</div><div class="stat-label">Tổng giờ tập trung</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#eaf3ff">✳</div><div><div class="stat-value">${doneHabits}</div><div class="stat-label">Lần hoàn thành thói quen</div></div></div></div><div class="insight-grid"><section class="card"><div class="card-head"><div class="card-title">◷ Thời gian tập trung</div><span class="card-meta">7 ngày gần nhất · phút</span></div><div class="chart-bars">${last.map((d,i)=>`<div class="chart-day"><b>${mins[i]||0}</b><div class="chart-col ${d===today()?'active':''}" style="height:${Math.max(3,mins[i]/max*105)}px"></div><small>${dayNames[dateObj(d).getDay()]}</small></div>`).join('')}</div></section><section class="card"><div class="card-head"><div class="card-title">☑ Tỷ lệ hoàn thành công việc</div></div><div class="insight-number">${all?Math.round(completed/all*100):0}%</div><div class="insight-copy">${completed} trong tổng số ${all} công việc đã được đánh dấu hoàn thành.</div><div class="bar" style="margin-top:18px"><span style="width:${all?completed/all*100:0}%"></span></div><p class="card-meta" style="line-height:1.55;margin-top:13px">Hãy đánh giá cả chất lượng nghỉ ngơi và mức độ tập trung — không chỉ số lượng việc đã làm.</p></section><section class="card"><div class="card-title">🏅 Thành tựu đã mở khóa</div><div class="grid" style="grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px">${badgeList().map(b=>`<div style="background:${b.on?'#f7f5ff':'#f7f8fa'};border-radius:12px;padding:12px;opacity:${b.on?1:.5}"><div style="font-size:22px">${b.icon}</div><b style="font-size:11px;display:block;margin-top:7px">${b.name}</b><small class="muted">${b.desc}</small></div>`).join('')}</div></section><section class="card"><div class="card-title">🌤️ Gợi ý điều chỉnh</div><p class="card-meta" style="line-height:1.7;margin-top:13px">${streak()===0?'Hãy bắt đầu lại bằng một hành động nhỏ hôm nay. Chuỗi ngày không định nghĩa giá trị của bạn.':`Bạn đã duy trì hoạt động ${streak()} ngày. Hãy giữ nhịp vừa sức và tiếp tục ưu tiên chất lượng.`}<br><br>Thử dành 5 phút cuối ngày để xem lại: việc gì tạo ra kết quả tốt nhất? Điều gì có thể đơn giản hóa ngày mai?</p></section></div></div>`}
-function badgeList(){return [{icon:'🌱',name:'Hạt mầm đầu tiên',desc:'Hoàn thành việc đầu tiên',on:state.tasks.some(t=>t.completed)},{icon:'🔥',name:'Giữ lửa',desc:'Có chuỗi 3 ngày',on:streak()>=3},{icon:'🧘',name:'Deep work',desc:'Hoàn thành 1 phiên tập trung',on:state.sessions.length>=1},{icon:'✳',name:'Người chăm cây',desc:'Hoàn thành 10 thói quen',on:state.habits.reduce((a,h)=>a+Object.values(h.history||{}).filter(Boolean).length,0)>=10},{icon:'🏅',name:'Level 5',desc:'Đạt cấp độ 5',on:level()>=5},{icon:'🎯',name:'Ngắm đúng đích',desc:'Hoàn thành một mục tiêu',on:state.goals.some(g=>g.progress>=100)}]}
+function isIosDevice(){return /iPhone|iPad|iPod/i.test(navigator.userAgent)||((navigator.platform==='MacIntel')&&navigator.maxTouchPoints>1)}
+function isInstalledPwa(){return !!(window.matchMedia?.('(display-mode: standalone)').matches||window.navigator.standalone)}
+function notificationPermission(){return ('Notification' in window)?Notification.permission:'unsupported'}
+function reminderTasks(){return (state.tasks||[]).filter(t=>t.reminderAt&&!t.completed).sort((a,b)=>new Date(a.reminderAt)-new Date(b.reminderAt));}
+function localDateTimeLabel(value){if(!value)return '';const d=new Date(value);if(Number.isNaN(d.getTime()))return value;return d.toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
+async function enableTaskNotifications(){
+ if(!('Notification' in window)){toast('Trình duyệt này chưa hỗ trợ thông báo.');return;}
+ if(isIosDevice()&&!isInstalledPwa()){toast('Trên iPhone, hãy mở DAYMARK từ biểu tượng đã thêm vào Màn hình chính rồi bật thông báo tại đây.');return;}
+ try{const permission=await Notification.requestPermission();
+  if(permission==='granted'){await showSystemNotification('DAYMARK đã bật thông báo','Bạn sẽ nhận nhắc việc khi DAYMARK đang hoạt động.');toast('Đã cấp quyền thông báo.');}
+  else if(permission==='denied')toast('Thông báo đang bị từ chối. Bạn có thể bật lại trong Cài đặt thông báo của thiết bị.');
+  else toast('Bạn chưa cấp quyền thông báo.');
+  if(currentPage==='reminders'||currentPage==='settings')render();
+ }catch(e){console.error(e);toast('Không thể bật thông báo trên trình duyệt này.');}
+}
+async function showSystemNotification(title,body,tag='daymark-reminder',data={}){
+ if(notificationPermission()!=='granted')return false;
+ const options={body,icon:'./icon-192.png',badge:'./icon-192.png',tag,renotify:true,requireInteraction:true,data:{url:'./',...data}};
+ try{
+  if('serviceWorker' in navigator){const reg=await navigator.serviceWorker.ready;if(reg?.showNotification){await reg.showNotification(title,options);return true;}}
+  const n=new Notification(title,options);n.onclick=()=>{window.focus();n.close()};return true;
+ }catch(e){console.warn('Notification unavailable',e);return false;}
+}
+function checkTaskReminders(){
+ const now=Date.now();let changed=false;
+ for(const task of (state.tasks||[])){
+  if(task.completed||!task.reminderAt||task.reminderSentAt)continue;
+  const at=new Date(task.reminderAt).getTime();if(!Number.isFinite(at)||at>now)continue;
+  // Do not consume a reminder while the app is hidden and Notifications are unavailable.
+  // It will be checked again when the user returns to DAYMARK.
+  if(document.hidden&&notificationPermission()!=='granted')continue;
+  task.reminderSentAt=new Date().toISOString();changed=true;
+  const late=now-at>60000;
+  const title=late?'Bạn có một việc cần xem lại':'Đến giờ thực hiện nhiệm vụ';
+  const body=`${task.title}${late?' · Thời điểm nhắc: '+localDateTimeLabel(task.reminderAt):''}`;
+  if(notificationPermission()==='granted'){
+   showSystemNotification(title,body,`task-${task.id}`,{taskId:task.id}).then(ok=>{if(!ok&&!document.hidden)toast(`⏰ ${title}: ${task.title}`)});
+  }else if(!document.hidden){
+   toast(`⏰ ${title}: ${task.title}`);
+  }
+ }
+ if(changed)save();
+}
+function startReminderChecks(){checkTaskReminders();if(window.__daymarkReminderInterval)clearInterval(window.__daymarkReminderInterval);window.__daymarkReminderInterval=setInterval(checkTaskReminders,15000);}
+function icsEscape(text){return String(text||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');}
+function icsUtc(value){const d=new Date(value);return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');}
+function createIcs(tasks){
+ const now=icsUtc(new Date());const events=tasks.filter(t=>t.reminderAt&&!t.completed).map(t=>{const start=new Date(t.reminderAt);if(Number.isNaN(start.getTime()))return '';const end=new Date(start.getTime()+15*60000);return ['BEGIN:VEVENT',`UID:daymark-${icsEscape(t.id)}@daymark.app`,`DTSTAMP:${now}`,`DTSTART:${icsUtc(start)}`,`DTEND:${icsUtc(end)}`,`SUMMARY:${icsEscape('DAYMARK: '+t.title)}`,`DESCRIPTION:${icsEscape((t.notes||'Nhắc việc từ DAYMARK')+'\\nNhóm: '+(t.area||'Khác'))}`,'BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY',`DESCRIPTION:${icsEscape(t.title)}`,'END:VALARM','END:VEVENT'].join('\r\n')}).filter(Boolean);
+ return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//DAYMARK//Task Reminders//VI','CALSCALE:GREGORIAN','METHOD:PUBLISH',...events,'END:VCALENDAR'].join('\r\n');
+}
+async function exportRemindersToCalendar(tasks){
+ const list=(tasks||[]).filter(t=>t.reminderAt&&!t.completed);if(!list.length){toast('Chưa có nhiệm vụ nào được đặt giờ nhắc.');return;}
+ const content=createIcs(list);const filename=`daymark-reminders-${today()}.ics`;const file=new File([content],filename,{type:'text/calendar;charset=utf-8'});
+ try{if(navigator.canShare?.({files:[file]})&&navigator.share){await navigator.share({files:[file],title:'DAYMARK — Lịch nhắc việc'});toast('Đã mở bảng chia sẻ lịch nhắc. Chọn Lịch/Calendar để thêm sự kiện.');return;}}
+ catch(e){if(e.name==='AbortError')return;}
+ const blob=new Blob([content],{type:'text/calendar;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);toast('Đã tạo file lịch .ics. Mở file trên iPhone rồi thêm vào Lịch.');
+}
+function renderReminders(){
+ const tasks=reminderTasks();const permission=notificationPermission();const permissionText=permission==='granted'?'Đã cấp quyền':permission==='denied'?'Đang bị chặn':permission==='unsupported'?'Không hỗ trợ':'Chưa cấp quyền';
+ const cards=tasks.map(t=>{const past=new Date(t.reminderAt).getTime()<=Date.now();return `<div class="reminder-item"><div class="reminder-clock">⏰</div><div class="reminder-copy"><div class="reminder-name">${esc(t.title)}</div><div class="reminder-meta">${localDateTimeLabel(t.reminderAt)} · ${esc(t.area||'Khác')} · ${past?'Đã đến giờ':'Sắp tới'}</div></div><div class="reminder-actions"><span class="reminder-state">${past?'ĐẾN GIỜ':'ĐÃ ĐẶT'}</span><button class="soft-btn" data-action="calendar-task" data-id="${esc(t.id)}">Thêm vào Lịch</button></div></div>`}).join('');
+ return `<div class="page">${pageHead('REMEMBER WHAT MATTERS','Nhắc việc','Đặt giờ cho những điều quan trọng. DAYMARK sẽ nhắc khi ứng dụng đang hoạt động và có thể xuất lịch để iPhone/Calendar nhắc kể cả khi đóng app.')}<section class="reminder-hero"><div class="eyebrow" style="color:#c4bdff">DAYMARK NOTIFICATIONS</div><h2>Đừng để việc quan trọng trôi qua.</h2><p>Trạng thái quyền thông báo: <b>${permissionText}</b>. Bật thông báo bằng thao tác bên dưới. Để nhắc đúng giờ khi DAYMARK đã đóng, hãy thêm lịch nhắc vào Apple Calendar/Google Calendar — hệ điều hành sẽ phụ trách báo giờ.</p><div class="toolbar" style="margin-top:14px"><button class="primary-btn" id="enableNotifications" style="background:white;color:#383264">${permission==='granted'?'✓ Đã bật thông báo':'Bật thông báo DAYMARK'}</button><button class="soft-btn" id="exportAllReminders">↓ Xuất tất cả sang Lịch (.ics)</button></div></section><section class="card"><div class="card-head"><div><div class="card-title">⏰ Lịch nhắc đang đặt</div><div class="card-meta">${tasks.length} nhiệm vụ có giờ nhắc · ${tasks.filter(t=>t.reminderSentAt).length} đã được DAYMARK thông báo trong lúc mở</div></div><button class="text-btn" data-goto="tasks">Quản lý công việc →</button></div><div>${cards||'<div class="empty"><div class="empty-ico">🔔</div>Chưa có lịch nhắc nào. Khi tạo hoặc sửa công việc, hãy chọn ngày giờ nhắc.</div>'}</div></section><div class="focus-safety-note"><b>Giới hạn cần biết:</b> bản này không dùng máy chủ gửi Push. Thông báo từ DAYMARK chỉ được phát khi ứng dụng đang chạy/được mở lại. Trên iPhone, file .ics thêm vào Apple Calendar sẽ tạo nhắc giờ hệ thống ngay cả khi DAYMARK đóng. Đừng xóa sự kiện trong Lịch nếu vẫn muốn nhận báo thức.</div></div>`;
+}
+
+function renderFocus(){const mins=state.sessions.filter(s=>s.date===today()).reduce((a,s)=>a+s.minutes,0);const recent=state.sessions.slice().reverse().slice(0,6);const pct=Math.max(0,Math.min(100,(timerMode-timerLeft)/timerMode*100));const label=state.focusTimer?.label||'Một việc quan trọng';const isRunning=timerRunning;return `<div class="page">${pageHead('DEEP WORK ZONE','Phòng tập trung','Bật chế độ tập trung để phủ toàn màn hình, giữ màn hình sáng nếu thiết bị hỗ trợ và đếm ngược chính xác.')}<div class="focus-layout"><section class="focus-main"><div class="focus-label">✦ DEEP WORK SESSION</div><div class="timer" id="timerDisplay">${String(Math.floor(timerLeft/60)).padStart(2,'0')}:${String(timerLeft%60).padStart(2,'0')}</div><div class="timer-sub" id="timerSub">${isRunning?'Phiên tập trung đang chạy':'Một việc tại một thời điểm. Bắt đầu ngay.'}</div><div class="timer-progress"><span id="timerProgress" style="width:${pct}%"></span></div><div class="field" style="max-width:360px;margin:0 auto 12px;text-align:left"><label style="color:#d6d2ff">Bạn đang tập trung vào việc gì?</label><input id="focusLabelInput" maxlength="90" placeholder="Ví dụ: Ôn Aptis Listening / Làm bài DSA" value="${esc(label==='Một việc quan trọng'?'':label)}" style="background:#ffffff12;border:1px solid #ffffff2a;color:white"></div><div class="timer-modes"><button data-minutes="15" class="${timerMode===900?'active':''}">15 phút</button><button data-minutes="25" class="${timerMode===1500?'active':''}">25 phút</button><button data-minutes="45" class="${timerMode===2700?'active':''}">45 phút</button><button data-minutes="60" class="${timerMode===3600?'active':''}">60 phút</button></div><div style="height:18px"></div><div class="timer-controls"><button class="timer-start" id="timerToggle">${isRunning?'Mở chế độ toàn màn hình':'Bắt đầu tập trung'}</button><button class="timer-secondary" id="timerReset">Đặt lại</button></div><div class="tiny-note" style="margin-top:16px;color:#c4c2dc">Khi bắt đầu: chế độ Deep Work phủ màn hình · giữ sáng nếu máy hỗ trợ · chuông khi hoàn tất</div></section><div class="stack"><section class="card"><div class="card-head"><div class="card-title">📈 Hôm nay</div><span class="card-meta">Tổng thời gian</span></div><div class="insight-number">${mins} <span style="font-size:14px;color:var(--muted)">phút</span></div><div class="insight-copy">${state.sessions.filter(s=>s.date===today()).length} phiên đã hoàn thành</div><div class="bar" style="margin-top:14px"><span style="width:${Math.min(100,mins/120*100)}%"></span></div><div class="goal-bottom"><span>Mục tiêu gợi ý: 120 phút</span><span>${Math.round(mins/120*100)}%</span></div></section><section class="card"><div class="card-head"><div class="card-title">🕯️ Phiên gần đây</div><span class="card-meta">${state.sessions.length} phiên tổng</span></div>${recent.map(s=>`<div class="focus-session"><div><b>${s.minutes} phút</b><div class="card-meta" style="margin-top:3px">${esc(s.label||'Tập trung')}</div></div><span>${fmt(s.date)} · ${s.time||''}</span></div>`).join('')||'<div class="empty">Phiên tập trung đầu tiên đang chờ bạn.</div>'}</section><section class="card"><div class="card-title">🌙 Ít xao nhãng hơn trên iPhone</div><p class="card-meta" style="line-height:1.7;margin:8px 0">DAYMARK không có quyền tự bật Không làm phiền. Trước phiên học, vuốt từ góc trên bên phải xuống → Tập trung → Không làm phiền. Có thể tạo lịch Focus riêng trong Cài đặt iPhone.</p><p class="card-meta" style="line-height:1.7;margin:0">Giữ DAYMARK ở foreground. Trên iOS 18.4+ với app đã thêm vào Màn hình chính, tính năng giữ màn hình sáng có thể hoạt động nếu trình duyệt cho phép.</p></section></div></div></div>`}
 function renderSettings(){return `<div class="page">${pageHead('MAKE IT YOURS','Cài đặt & dữ liệu','Dữ liệu của bạn được lưu trên trình duyệt hiện tại. Hãy sao lưu định kỳ để tránh mất dữ liệu.')}<div class="grid" style="grid-template-columns:1fr 1fr;gap:16px"><section class="card"><div class="card-title">👤 Hồ sơ cá nhân</div><div class="field" style="margin-top:16px"><label>Tên hiển thị</label><input id="nameInput" value="${esc(state.userName)}" maxlength="40"></div><button class="primary-btn" id="saveName">Lưu thay đổi</button><div class="divider"></div><div class="card-title">✦ Tiến trình</div><div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px"><div><div class="insight-number">Level ${level()}</div><div class="card-meta">${levelName()}</div></div><div style="text-align:right"><div class="insight-number">${state.xp} XP</div><div class="card-meta">${100-(state.xp%100)} XP tới cấp tiếp</div></div></div><div class="bar" style="margin-top:13px"><span style="width:${state.xp%100}%"></span></div></section><section class="card"><div class="card-title">📦 Sao lưu & khôi phục</div><p class="card-meta" style="line-height:1.6;margin:9px 0 16px">Xuất toàn bộ công việc, mục tiêu, thói quen, nhật ký và lịch sử tập trung thành file JSON. Bạn có thể nhập lại trên thiết bị khác.</p><button class="primary-btn" style="width:100%" id="exportData">↓ Xuất dữ liệu (.json)</button><label class="soft-btn" style="display:block;text-align:center;margin-top:9px;cursor:pointer"><input type="file" id="importData" accept="application/json" hidden>↑ Nhập dữ liệu từ file</label><div class="divider"></div><div class="card-title">🧹 Làm mới</div><p class="card-meta" style="line-height:1.6">Xóa toàn bộ dữ liệu đã lưu trong trình duyệt này và bắt đầu lại với dữ liệu mẫu.</p><button class="soft-btn danger" id="resetData">Khôi phục dữ liệu mẫu</button></section></div><div class="card" style="margin-top:16px"><div class="card-title">🛡️ Quyền riêng tư & cách hoạt động</div><div class="settings-row"><div><strong>Lưu trữ cục bộ</strong><p>Dữ liệu nằm trong localStorage của trình duyệt, không tự gửi lên máy chủ.</p></div><span class="tag" style="background:#e7f6ef;color:#3b9e7c">ON-DEVICE</span></div><div class="settings-row"><div><strong>Không cần tài khoản</strong><p>Không có đăng nhập, không đồng bộ tự động giữa các thiết bị.</p></div><span class="tag">OFFLINE-READY</span></div><div class="settings-row"><div><strong>Phím tắt</strong><p><kbd>N</kbd> tạo việc · <kbd>/</kbd> tìm kiếm · <kbd>Esc</kbd> đóng cửa sổ</p></div><span class="tag">SHORTCUTS</span></div></div></div>`}
 // ---------------- DAYMARK 2.0: COACH, RPG, SECOND BRAIN & SMART ANALYTICS ----------------
 function minutesFocused(day=today()){return state.sessions.filter(x=>x.date===day).reduce((a,x)=>a+(Number(x.minutes)||0),0)}
@@ -403,11 +518,11 @@ function redeemReward(id){
 }
 // -----------------------------------------------------------------------------------------
 
-function render(){const view=$('#view');const fn={dashboard:renderDashboard,tasks:renderTasks,planner:renderPlanner,habits:renderHabits,goals:renderGoals,focus:renderFocus,coach:renderCoach,rpg:renderRPG,brain:renderBrain,journal:renderJournal,insights:renderSmartAnalytics,settings:renderSettings};view.innerHTML=(fn[currentPage]||renderDashboard)();updateChrome();bindDynamic();if(currentPage==='focus')updateTimerDisplay()}
+function render(){const view=$('#view');const fn={dashboard:renderDashboard,tasks:renderTasks,planner:renderPlanner,habits:renderHabits,goals:renderGoals,focus:renderFocus,reminders:renderReminders,coach:renderCoach,rpg:renderRPG,brain:renderBrain,journal:renderJournal,insights:renderSmartAnalytics,settings:renderSettings};view.innerHTML=(fn[currentPage]||renderDashboard)();updateChrome();bindDynamic();if(currentPage==='focus')updateTimerDisplay()}
 // Modals
 function openModal(title,body,submitLabel='Lưu',onSubmit=null,wide=false){$('#modalRoot').innerHTML=`<div class="modal-backdrop" id="modalBackdrop"><div class="modal ${wide?'wide':''}"><div class="modal-head"><h3>${title}</h3><button class="close-btn" id="modalClose">×</button></div><form id="modalForm">${body}<div class="modal-actions"><button type="button" class="soft-btn" id="modalCancel">Hủy</button><button class="primary-btn" type="submit">${submitLabel}</button></div></form></div></div>`;$('#modalClose').onclick=closeModal;$('#modalCancel').onclick=closeModal;$('#modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});$('#modalForm').onsubmit=e=>{e.preventDefault();if(onSubmit)onSubmit(new FormData(e.currentTarget));};setTimeout(()=>$('#modalForm input:not([type=hidden]),#modalForm textarea')?.focus(),40)}
 function closeModal(){$('#modalRoot').innerHTML=''}
-function addTask(date=today(),task=null){const t=task||{};openModal(task?'Sửa công việc':'Tạo công việc',`<div class="field"><label>Tên công việc *</label><input name="title" required maxlength="120" placeholder="Ví dụ: Làm 2 bài DSA" value="${esc(t.title||'')}"></div><div class="form-row"><div class="field"><label>Nhóm</label><select name="area"><option ${t.area==='English'?'selected':''}>English</option><option ${t.area==='IT'?'selected':''}>IT</option><option ${t.area==='University'?'selected':''}>University</option><option ${t.area==='Personal'?'selected':''}>Personal</option><option ${t.area==='Khác'?'selected':''}>Khác</option></select></div><div class="field"><label>Mức ưu tiên</label><select name="priority"><option value="high" ${t.priority==='high'?'selected':''}>Cao</option><option value="medium" ${!t.priority||t.priority==='medium'?'selected':''}>Vừa</option><option value="low" ${t.priority==='low'?'selected':''}>Thấp</option></select></div></div><div class="form-row"><div class="field"><label>Ngày thực hiện</label><input type="date" name="due" value="${t.due||date}"></div><div class="field"><label>Thời lượng dự kiến (phút)</label><input type="number" name="estimate" min="5" max="600" step="5" value="${t.estimate||25}"></div></div><div class="field"><label>Ghi chú (không bắt buộc)</label><textarea name="notes" placeholder="Bước đầu tiên để bắt tay vào làm là gì?">${esc(t.notes||'')}</textarea></div>`,task?'Lưu thay đổi':'Tạo công việc',fd=>{const title=fd.get('title').trim();if(!title)return;const item={id:t.id||uid(),title,area:fd.get('area'),priority:fd.get('priority'),due:fd.get('due')||today(),estimate:Number(fd.get('estimate'))||25,notes:fd.get('notes'),completed:t.completed||false,created:t.created||today()};if(task)state.tasks=state.tasks.map(x=>x.id===t.id?item:x);else state.tasks.push(item);save();closeModal();render();toast(task?'Đã cập nhật công việc.':'Đã thêm công việc.');});}
+function addTask(date=today(),task=null){const t=task||{};openModal(task?'Sửa công việc':'Tạo công việc',`<div class="field"><label>Tên công việc *</label><input name="title" required maxlength="120" placeholder="Ví dụ: Làm 2 bài DSA" value="${esc(t.title||'')}"></div><div class="form-row"><div class="field"><label>Nhóm</label><select name="area"><option ${t.area==='English'?'selected':''}>English</option><option ${t.area==='IT'?'selected':''}>IT</option><option ${t.area==='University'?'selected':''}>University</option><option ${t.area==='Personal'?'selected':''}>Personal</option><option ${t.area==='Khác'?'selected':''}>Khác</option></select></div><div class="field"><label>Mức ưu tiên</label><select name="priority"><option value="high" ${t.priority==='high'?'selected':''}>Cao</option><option value="medium" ${!t.priority||t.priority==='medium'?'selected':''}>Vừa</option><option value="low" ${t.priority==='low'?'selected':''}>Thấp</option></select></div></div><div class="form-row"><div class="field"><label>Ngày thực hiện</label><input type="date" name="due" value="${t.due||date}"></div><div class="field"><label>Thời lượng dự kiến (phút)</label><input type="number" name="estimate" min="5" max="600" step="5" value="${t.estimate||25}"></div></div><div class="field"><label>⏰ Nhắc vào thời điểm (không bắt buộc)</label><input type="datetime-local" name="reminderAt" value="${esc(t.reminderAt||'')}"><small>Đặt thời gian cụ thể. Để nhận báo giờ khi DAYMARK đóng, hãy thêm lịch này vào Apple Calendar/Google Calendar ở mục Nhắc việc.</small></div><div class="field"><label>Ghi chú (không bắt buộc)</label><textarea name="notes" placeholder="Bước đầu tiên để bắt tay vào làm là gì?">${esc(t.notes||'')}</textarea></div>`,task?'Lưu thay đổi':'Tạo công việc',fd=>{const title=fd.get('title').trim();if(!title)return;const reminderAt=String(fd.get('reminderAt')||'');const changedReminder=reminderAt!==(t.reminderAt||'');if(reminderAt&&Number.isNaN(new Date(reminderAt).getTime())){toast('Thời gian nhắc không hợp lệ.');return;}const item={id:t.id||uid(),title,area:fd.get('area'),priority:fd.get('priority'),due:fd.get('due')||date,estimate:Number(fd.get('estimate'))||25,notes:fd.get('notes'),reminderAt,reminderSentAt:changedReminder?null:(t.reminderSentAt||null),completed:t.completed||false,created:t.created||today()};if(task)state.tasks=state.tasks.map(x=>x.id===t.id?item:x);else state.tasks.push(item);save();closeModal();render();toast(task?'Đã cập nhật công việc.':'Đã thêm công việc.');});}
 function addHabit(){openModal('Tạo thói quen mới',`<div class="field"><label>Tên thói quen *</label><input name="name" required maxlength="60" placeholder="Ví dụ: Đi bộ 15 phút"></div><div class="field"><label>Biểu tượng</label><select name="icon"><option>🌱</option><option>📚</option><option>💻</option><option>🏃</option><option>🧘</option><option>🎨</option><option>💧</option><option>✍️</option><option>🎧</option></select></div><small class="muted">Mẹo: hãy chọn một hành động nhỏ, rõ ràng và dễ lặp lại.</small>`, 'Tạo thói quen',fd=>{state.habits.push({id:uid(),name:fd.get('name').trim(),icon:fd.get('icon'),color:'#eeeaff',history:{}});save();closeModal();render();toast('Đã gieo một thói quen mới. 🌱')})}
 function addGoal(g=null){const milestones=(g?.milestones||[]).map(m=>m.text).join('\n');openModal(g?'Chỉnh sửa mục tiêu':'Tạo mục tiêu',`<div class="field"><label>Tên mục tiêu *</label><input name="title" required maxlength="100" value="${esc(g?.title||'')}" placeholder="Điều bạn muốn đạt được"></div><div class="form-row"><div class="field"><label>Biểu tượng</label><select name="icon">${['🎯','🌍','💻','📚','⚡','💪','🎨','💼','🌿'].map(i=>`<option ${i===(g?.icon||'🎯')?'selected':''}>${i}</option>`).join('')}</select></div><div class="field"><label>Hạn hoàn thành</label><input name="deadline" type="date" value="${g?.deadline||dateAdd(today(),30)}"></div></div><div class="field"><label>Vì sao mục tiêu này quan trọng?</label><textarea name="why" placeholder="Điều này sẽ thay đổi điều gì?">${esc(g?.why||'')}</textarea></div><div class="field"><label>Tiến độ hiện tại: <b id="goalProgVal">${g?.progress||0}%</b></label><input type="range" name="progress" min="0" max="100" value="${g?.progress||0}" oninput="document.getElementById('goalProgVal').textContent=this.value+'%'"></div><div class="field"><label>Cột mốc (mỗi dòng một cột mốc)</label><textarea name="milestones" placeholder="Hoàn thành bước nền tảng\nLuyện tập đều đặn\nĐánh giá kết quả">${esc(milestones)}</textarea></div>`,g?'Lưu mục tiêu':'Tạo mục tiêu',fd=>{const lines=fd.get('milestones').split('\n').map(x=>x.trim()).filter(Boolean);const old=g?.milestones||[];const item={id:g?.id||uid(),title:fd.get('title').trim(),icon:fd.get('icon'),deadline:fd.get('deadline')||dateAdd(today(),30),why:fd.get('why'),progress:Number(fd.get('progress')),milestones:lines.map((text,i)=>({text,done:old.find(m=>m.text===text)?.done||false}))};if(g)state.goals=state.goals.map(x=>x.id===g.id?item:x);else state.goals.push(item);save();closeModal();render();toast('Mục tiêu đã được lưu.');},true)}
 function addJournal(){openModal('Viết nhật ký',`<div class="field"><label>Tiêu đề</label><input name="title" maxlength="80" placeholder="Một ngày đáng nhớ..."></div><div class="field"><label>Hôm nay bạn muốn ghi lại điều gì? *</label><textarea name="text" required rows="6" placeholder="Điều mình đã làm tốt...\nĐiều mình học được...\nMột việc muốn thử vào ngày mai..."></textarea></div><div class="field"><label>Tâm trạng</label><select name="mood"><option>🙂 Bình thường</option><option>😊 Tích cực</option><option>😌 Bình yên</option><option>🤔 Đang suy nghĩ</option><option>😴 Mệt nhưng vẫn cố gắng</option></select></div>`, 'Lưu nhật ký',fd=>{state.journal.push({id:uid(),title:fd.get('title'),text:fd.get('text'),mood:fd.get('mood'),date:today()});save();closeModal();render();toast('Đã lưu lại một mảnh ghép trong ngày. ✨')},true)}
@@ -418,7 +533,7 @@ function toggleHabit(id,day=today()){const h=state.habits.find(x=>x.id===id);if(
 function bindDynamic(){
  $$('[data-goto]').forEach(b=>b.onclick=()=>setPage(b.dataset.goto));
  $$('[data-filter]').forEach(b=>b.onclick=()=>{taskFilter=b.dataset.filter;render()});
- $$('[data-action]').forEach(el=>{el.onclick=(e)=>{const a=el.dataset.action,id=el.dataset.id;switch(a){case'add-task':addTask();break;case'add-task-date':addTask(el.dataset.date);break;case'toggle-task':toggleTask(id);break;case'edit-task':{const t=state.tasks.find(x=>x.id===id);if(t)addTask(t.due,t);break}case'delete-task':confirmBox('Xóa công việc?','Công việc này sẽ bị xóa khỏi danh sách.', 'Xóa',()=>{state.tasks=state.tasks.filter(t=>t.id!==id);save();render();toast('Đã xóa công việc.')});break;case'toggle-habit':toggleHabit(id);break;case'toggle-habit-date':toggleHabit(id,el.dataset.date);break;case'add-habit':addHabit();break;case'delete-habit':confirmBox('Xóa thói quen?','Lịch sử của thói quen này cũng sẽ bị xóa.', 'Xóa',()=>{state.habits=state.habits.filter(h=>h.id!==id);save();render()});break;case'add-goal':addGoal();break;case'edit-goal':{const g=state.goals.find(x=>x.id===id);if(g)addGoal(g);break}case'delete-goal':confirmBox('Xóa mục tiêu?','Bạn có chắc muốn xóa mục tiêu này?', 'Xóa',()=>{state.goals=state.goals.filter(g=>g.id!==id);save();render()});break;case'toggle-milestone':{const g=state.goals.find(x=>x.id===id),i=Number(el.dataset.index);if(g&&g.milestones[i]){g.milestones[i].done=el.checked;const total=g.milestones.length,done=g.milestones.filter(m=>m.done).length;if(total)g.progress=Math.max(g.progress,Math.round(done/total*100));if(el.checked)award(`milestone-${id}-${i}`,20,'Một cột mốc được chinh phục!');save();render()}break}case'add-journal':addJournal();break;case'delete-journal':confirmBox('Xóa ghi chú?','Bài nhật ký này sẽ bị xóa.', 'Xóa',()=>{state.journal=state.journal.filter(j=>j.id!==id);save();render()});break;case'week-prev':plannerOffset--;render();break;case'week-next':plannerOffset++;render();break;case'week-today':plannerOffset=0;render();break;
+ $$('[data-action]').forEach(el=>{el.onclick=(e)=>{const a=el.dataset.action,id=el.dataset.id;switch(a){case'add-task':addTask();break;case'add-task-date':addTask(el.dataset.date);break;case'calendar-task':{const task=state.tasks.find(x=>x.id===id);if(task)exportRemindersToCalendar([task]);break}case'export-all-reminders':exportRemindersToCalendar(reminderTasks());break;case'enable-notifications':enableTaskNotifications();break;case'toggle-task':toggleTask(id);break;case'edit-task':{const t=state.tasks.find(x=>x.id===id);if(t)addTask(t.due,t);break}case'delete-task':confirmBox('Xóa công việc?','Công việc này sẽ bị xóa khỏi danh sách.', 'Xóa',()=>{state.tasks=state.tasks.filter(t=>t.id!==id);save();render();toast('Đã xóa công việc.')});break;case'toggle-habit':toggleHabit(id);break;case'toggle-habit-date':toggleHabit(id,el.dataset.date);break;case'add-habit':addHabit();break;case'delete-habit':confirmBox('Xóa thói quen?','Lịch sử của thói quen này cũng sẽ bị xóa.', 'Xóa',()=>{state.habits=state.habits.filter(h=>h.id!==id);save();render()});break;case'add-goal':addGoal();break;case'edit-goal':{const g=state.goals.find(x=>x.id===id);if(g)addGoal(g);break}case'delete-goal':confirmBox('Xóa mục tiêu?','Bạn có chắc muốn xóa mục tiêu này?', 'Xóa',()=>{state.goals=state.goals.filter(g=>g.id!==id);save();render()});break;case'toggle-milestone':{const g=state.goals.find(x=>x.id===id),i=Number(el.dataset.index);if(g&&g.milestones[i]){g.milestones[i].done=el.checked;const total=g.milestones.length,done=g.milestones.filter(m=>m.done).length;if(total)g.progress=Math.max(g.progress,Math.round(done/total*100));if(el.checked)award(`milestone-${id}-${i}`,20,'Một cột mốc được chinh phục!');save();render()}break}case'add-journal':addJournal();break;case'delete-journal':confirmBox('Xóa ghi chú?','Bài nhật ký này sẽ bị xóa.', 'Xóa',()=>{state.journal=state.journal.filter(j=>j.id!==id);save();render()});break;case'week-prev':plannerOffset--;render();break;case'week-next':plannerOffset++;render();break;case'week-today':plannerOffset=0;render();break;
  case'add-note':addBrainNote();break;
  case'edit-note':{const n=state.brainNotes.find(x=>x.id===id);if(n)addBrainNote(n);break}
  case'delete-note':confirmBox('Xóa ghi chú?','Ghi chú này sẽ bị xóa khỏi Second Brain.', 'Xóa',()=>{state.brainNotes=state.brainNotes.filter(n=>n.id!==id);save();render();toast('Đã xóa ghi chú.')});break;
@@ -435,51 +550,107 @@ function bindDynamic(){
  const brainSearch=$('#brainSearch');if(brainSearch)brainSearch.oninput=()=>{brainQuery=brainSearch.value;const pos=brainSearch.selectionStart;$('#view').innerHTML=renderBrain();bindDynamic();const n=$('#brainSearch');n.focus();n.setSelectionRange(pos,pos)};
  const brainFolderSelect=$('#brainFolder');if(brainFolderSelect)brainFolderSelect.onchange=()=>{brainFolder=brainFolderSelect.value;render()};
 }
-// Timer — deadline-based so it stays accurate when Safari backgrounds the PWA
+// Focus timer: deadline-based, immersive overlay, wake lock where supported.
+let focusRunId=null,focusOverlayOpen=false,focusCompleted=false,wakeLockSentinel=null,focusAudioContext=null;
+async function requestFocusWakeLock(){
+ if(!timerRunning||!focusOverlayOpen||document.visibilityState!=='visible')return;
+ if(!('wakeLock' in navigator)){const status=$('#focusWakeStatus');if(status)status.textContent='Thiết bị/trình duyệt chưa hỗ trợ giữ sáng tự động';return;}
+ try{wakeLockSentinel=await navigator.wakeLock.request('screen');const status=$('#focusWakeStatus');if(status)status.textContent='Màn hình đang được giữ sáng';wakeLockSentinel.addEventListener('release',()=>{wakeLockSentinel=null;const st=$('#focusWakeStatus');if(st&&timerRunning)st.textContent='Màn hình có thể tự khóa khi ứng dụng ra nền';});}
+ catch(e){console.info('Wake Lock unavailable:',e?.name||e);const status=$('#focusWakeStatus');if(status)status.textContent='Không thể giữ sáng — hãy tăng Thời gian tự khóa trên iPhone nếu cần';}
+}
+function releaseFocusWakeLock(){if(wakeLockSentinel){const lock=wakeLockSentinel;wakeLockSentinel=null;lock.release().catch(()=>{});}}
+function prepareFocusAudio(){try{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;if(!focusAudioContext)focusAudioContext=new Ctx();if(focusAudioContext.state==='suspended')focusAudioContext.resume().catch(()=>{});}catch(e){console.info('Audio is unavailable',e);}}
+function playFocusAlarm(){
+ try{
+  if(!focusAudioContext)prepareFocusAudio();
+  if(focusAudioContext){
+   const ctx=focusAudioContext;if(ctx.state==='suspended')ctx.resume().catch(()=>{});
+   // A short three-part chime, more noticeable than a single beep but not excessively loud.
+   const notes=[659,784,988,784,659,784,988,1175,988,784,659];
+   notes.forEach((hz,i)=>{const start=ctx.currentTime+i*.34;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(hz,start);gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.14,start+.035);gain.gain.exponentialRampToValueAtTime(.0001,start+.25);osc.connect(gain);gain.connect(ctx.destination);osc.start(start);osc.stop(start+.27);});
+  }
+  if(typeof navigator.vibrate==='function')navigator.vibrate([160,90,160,90,260]);
+ }catch(e){console.info('Could not play focus alarm',e);}
+}
+function focusOverlayMarkup(completed=false){
+ const title=state.focusTimer?.label||'Phiên tập trung';
+ const progress=timerMode?Math.max(0,Math.min(100,(timerMode-timerLeft)/timerMode*100)):0;
+ if(completed)return `<div class="focus-overlay-top"><div class="focus-overlay-brand">DAYMARK <small>THE WORK IS DONE</small></div><button class="focus-overlay-exit" id="focusOverlayClose" aria-label="Đóng">×</button></div><div class="focus-overlay-center"><div class="focus-complete-mark">✦</div><div class="focus-overline">PROMISE KEPT</div><h1 class="focus-complete-title">Bạn đã làm được.</h1><p class="focus-complete-copy">${esc(title)} · ${Math.round(timerMode/60)} phút tập trung. Không cần chờ động lực — bạn đã bắt đầu và hoàn thành.</p><div class="focus-orb" style="--focus-progress:360deg"><div class="focus-orb-inner"><div class="focus-overlay-time">✓</div><div class="focus-time-caption">SESSION COMPLETE</div></div></div><p class="focus-motto">“Ý chí được rèn từ những lần bạn giữ lời hứa nhỏ với chính mình.”</p></div><div class="focus-overlay-bottom"><div class="focus-overlay-controls"><button class="focus-big-btn" id="focusDoneClose">Hoàn tất</button><button class="focus-ghost-btn" id="focusNextSession">Phiên tiếp theo</button></div><div class="focus-system-note">Hãy nghỉ mắt, đứng dậy và uống chút nước trước khi bắt đầu phiên mới.</div></div>`;
+ return `<div class="focus-overlay-top"><div class="focus-overlay-brand">DAYMARK <small>DISCIPLINE IS A DAILY CHOICE</small></div><button class="focus-overlay-exit" id="focusOverlayClose" aria-label="Thu nhỏ">×</button></div><div class="focus-overlay-center"><div class="focus-overline">✦ DEEP WORK · NO DISTRACTIONS</div><h2 class="focus-overlay-title">${esc(title)}</h2><div class="focus-orb" id="focusOrb" style="--focus-progress:${progress*3.6}deg"><div class="focus-orb-inner"><div class="focus-overlay-time" id="focusOverlayTime">${String(Math.floor(timerLeft/60)).padStart(2,'0')}:${String(timerLeft%60).padStart(2,'0')}</div><div class="focus-time-caption">TIME REMAINING</div></div></div><p class="focus-motto">“Tập trung vào điều bạn có thể làm ngay bây giờ. Mỗi phút đều đang xây nên phiên bản mạnh mẽ hơn.”</p><div class="focus-status"><i></i><span id="focusWakeStatus">Đang chuẩn bị giữ màn hình sáng…</span></div></div><div class="focus-overlay-bottom"><div class="focus-overlay-controls"><button class="focus-big-btn" id="focusOverlayToggle">${timerRunning?'Tạm dừng':'Tiếp tục'}</button><button class="focus-ghost-btn" id="focusOverlayFinish">Kết thúc phiên</button></div><div class="focus-system-note">Đừng khóa máy bằng nút nguồn nếu muốn đồng hồ tiếp tục hiển thị. Chạm × để thu nhỏ; bộ đếm vẫn chạy.</div></div>`;
+}
+function bindFocusOverlay(){
+ $('#focusOverlayClose')?.addEventListener('click',closeFocusOverlay);
+ $('#focusDoneClose')?.addEventListener('click',closeFocusOverlay);
+ $('#focusNextSession')?.addEventListener('click',()=>{closeFocusOverlay();resetTimer();startTimer();});
+ $('#focusOverlayToggle')?.addEventListener('click',()=>{if(timerRunning)stopTimer();else resumeTimer();});
+ $('#focusOverlayFinish')?.addEventListener('click',()=>{if(confirm('Kết thúc phiên tập trung sớm? Phiên này sẽ không được tính là hoàn thành.')){cancelFocusSession();}});
+}
+async function openFocusOverlay(completed=false){
+ const root=$('#focusOverlay');if(!root)return;focusOverlayOpen=true;root.innerHTML=focusOverlayMarkup(completed);root.classList.add('active');root.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';bindFocusOverlay();
+ // Fullscreen API is used only where supported. iPhone Home Screen web apps already run standalone;
+ // iPhone Safari does not expose generic element fullscreen consistently.
+ const ios=isIosDevice();if(!ios&&document.fullscreenEnabled&&!document.fullscreenElement){try{await document.documentElement.requestFullscreen({navigationUI:'hide'});}catch(e){console.info('Fullscreen request skipped',e);}}
+ if(timerRunning&&!completed){await requestFocusWakeLock();}
+ updateTimerDisplay();
+}
+async function closeFocusOverlay(){
+ const root=$('#focusOverlay');focusOverlayOpen=false;if(root){root.classList.remove('active');root.setAttribute('aria-hidden','true');root.innerHTML='';}document.body.style.overflow='';releaseFocusWakeLock();
+ if(document.fullscreenElement){try{await document.exitFullscreen();}catch(e){}}
+}
 function updateTimerDisplay(){
  if(timerRunning){timerLeft=Math.max(0,Math.ceil((timerDeadline-Date.now())/1000));if(timerLeft<=0){finishTimer();return;}}
- const d=$('#timerDisplay');if(!d)return;
- d.textContent=`${String(Math.floor(timerLeft/60)).padStart(2,'0')}:${String(timerLeft%60).padStart(2,'0')}`;
+ const text=`${String(Math.floor(timerLeft/60)).padStart(2,'0')}:${String(timerLeft%60).padStart(2,'0')}`;
+ const d=$('#timerDisplay');if(d)d.textContent=text;
  const p=$('#timerProgress');if(p)p.style.width=(Math.max(0,(timerMode-timerLeft)/timerMode*100))+'%';
  const sub=$('#timerSub');if(sub)sub.textContent=timerRunning?'Bạn đang ở trong phiên tập trung':'Bắt đầu khi bạn đã sẵn sàng';
- const btn=$('#timerToggle');if(btn)btn.textContent=timerRunning?'Tạm dừng':'Bắt đầu tập trung';
+ const btn=$('#timerToggle');if(btn)btn.textContent=timerRunning?'Mở chế độ toàn màn hình':'Bắt đầu tập trung';
+ const ov=$('#focusOverlayTime');if(ov)ov.textContent=text;
+ const orb=$('#focusOrb');if(orb)orb.style.setProperty('--focus-progress',`${Math.max(0,Math.min(100,(timerMode-timerLeft)/timerMode*100))*3.6}deg`);
+ const ob=$('#focusOverlayToggle');if(ob)ob.textContent=timerRunning?'Tạm dừng':'Tiếp tục';
 }
-function persistTimer(){state.focusTimer=timerRunning?{running:true,deadline:timerDeadline,mode:timerMode,label:'Phiên tập trung'}:{running:false,left:timerLeft,mode:timerMode};save()}
+function persistTimer(){state.focusTimer=timerRunning?{running:true,deadline:timerDeadline,mode:timerMode,label:state.focusTimer?.label||'Phiên tập trung',runId:focusRunId}:{running:false,left:timerLeft,mode:timerMode,label:state.focusTimer?.label||'Phiên tập trung',runId:focusRunId};save()}
 function finishTimer(){
- if(!timerRunning&&timerLeft===0)return;
- timerRunning=false;if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerLeft=0;
- const runId=state.focusTimer?.runId||uid();const minutes=Math.max(1,Math.round(timerMode/60));
- if(!state.sessions.some(x=>x.id===runId)){state.sessions.push({id:runId,date:today(),minutes,label:'Phiên tập trung',time:new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})});award(`focus-${runId}`,Math.max(5,minutes),'Bạn vừa hoàn thành một phiên tập trung!');}
- state.focusTimer=null;save();updateTimerDisplay();toast('🎉 Phiên tập trung hoàn tất. Đứng dậy nghỉ một chút nhé!');if(currentPage==='focus')render();
+ if(!timerRunning&&timerLeft===0&&focusCompleted)return;
+ timerRunning=false;if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerLeft=0;focusCompleted=true;
+ const runId=focusRunId||state.focusTimer?.runId||uid();const minutes=Math.max(1,Math.round(timerMode/60));const label=state.focusTimer?.label||'Phiên tập trung';
+ if(!state.sessions.some(x=>x.id===runId)){state.sessions.push({id:runId,date:today(),minutes,label,time:new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})});award(`focus-${runId}`,Math.max(5,minutes),`Bạn vừa hoàn thành ${label}!`);}
+ state.focusTimer=null;save();releaseFocusWakeLock();playFocusAlarm();showSystemNotification('Hoàn thành phiên tập trung',`${label} · ${minutes} phút. Bạn đã giữ lời hứa với chính mình.`,`focus-${runId}`);
+ if(focusOverlayOpen){const root=$('#focusOverlay');root.innerHTML=focusOverlayMarkup(true);bindFocusOverlay();}else toast('🎉 Hoàn thành phiên tập trung! Hãy nghỉ ngắn trước khi tiếp tục.');
+ if(currentPage==='focus')render();
 }
 function stopTimer(){
  if(timerRunning){timerLeft=Math.max(0,Math.ceil((timerDeadline-Date.now())/1000));if(timerLeft<=0){finishTimer();return;}}
- timerRunning=false;if(timerInterval)clearInterval(timerInterval);timerInterval=null;persistTimer();updateTimerDisplay();
+ timerRunning=false;if(timerInterval)clearInterval(timerInterval);timerInterval=null;persistTimer();releaseFocusWakeLock();updateTimerDisplay();
+}
+function resumeTimer(){
+ if(timerRunning){openFocusOverlay();return;}
+ if(timerLeft<=0)timerLeft=timerMode;
+ timerRunning=true;focusCompleted=false;timerDeadline=Date.now()+timerLeft*1000;focusRunId=focusRunId||state.focusTimer?.runId||uid();
+ state.focusTimer={running:true,deadline:timerDeadline,mode:timerMode,label:state.focusTimer?.label||'Phiên tập trung',runId:focusRunId};save();prepareFocusAudio();if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(updateTimerDisplay,500);openFocusOverlay();
 }
 function startTimer(){
- if(timerRunning){stopTimer();return;}
+ if(timerRunning){openFocusOverlay();return;}
  if(timerLeft<=0)timerLeft=timerMode;
- timerRunning=true;timerDeadline=Date.now()+timerLeft*1000;
- state.focusTimer={running:true,deadline:timerDeadline,mode:timerMode,label:'Phiên tập trung',runId:uid()};
- save();updateTimerDisplay();if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(updateTimerDisplay,500);
+ focusRunId=uid();focusCompleted=false;const label=$('#focusLabelInput')?.value.trim()||'Phiên tập trung';
+ timerRunning=true;timerDeadline=Date.now()+timerLeft*1000;state.focusTimer={running:true,deadline:timerDeadline,mode:timerMode,label,runId:focusRunId};
+ save();prepareFocusAudio();if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(updateTimerDisplay,500);openFocusOverlay();
 }
-function resetTimer(){if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerLeft=timerMode;state.focusTimer={running:false,left:timerLeft,mode:timerMode};save();updateTimerDisplay()}
+function cancelFocusSession(){
+ timerRunning=false;if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerLeft=timerMode;focusCompleted=false;focusRunId=null;state.focusTimer={running:false,left:timerLeft,mode:timerMode};save();releaseFocusWakeLock();closeFocusOverlay();updateTimerDisplay();toast('Đã kết thúc phiên sớm. Phiên này không được tính XP.');
+}
+function resetTimer(){if(timerRunning&& !confirm('Đặt lại sẽ hủy phiên đang chạy. Bạn có chắc không?'))return;if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerRunning=false;timerLeft=timerMode;focusCompleted=false;focusRunId=null;state.focusTimer={running:false,left:timerLeft,mode:timerMode};save();releaseFocusWakeLock();if(focusOverlayOpen)closeFocusOverlay();updateTimerDisplay();}
 function restoreTimer(){
- const saved=state.focusTimer;if(!saved)return;
- timerMode=Number(saved.mode)||1500;
- if(saved.running&&Number(saved.deadline)>Date.now()){
-   timerRunning=true;timerDeadline=Number(saved.deadline);timerLeft=Math.max(0,Math.ceil((timerDeadline-Date.now())/1000));
-   if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(updateTimerDisplay,500);
- }else if(saved.running&&Number(saved.deadline)<=Date.now()){
-   timerRunning=true;timerDeadline=Number(saved.deadline);timerLeft=0;finishTimer();
- }else{timerRunning=false;timerLeft=Math.max(0,Number(saved.left)||timerMode)}
+ const saved=state.focusTimer;if(!saved)return;timerMode=Number(saved.mode)||1500;focusRunId=saved.runId||null;
+ if(saved.running&&Number(saved.deadline)>Date.now()){timerRunning=true;timerDeadline=Number(saved.deadline);timerLeft=Math.max(0,Math.ceil((timerDeadline-Date.now())/1000));if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(updateTimerDisplay,500);}
+ else if(saved.running&&Number(saved.deadline)<=Date.now()){timerRunning=true;timerDeadline=Number(saved.deadline);timerLeft=0;finishTimer();}
+ else{timerRunning=false;timerLeft=Math.max(0,Number(saved.left)||timerMode);}
 }
 function bindGlobal(){
  $('#mainNav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)setPage(b.dataset.page)};
  $('#globalAdd').onclick=()=>addTask();
  $('#searchBtn').onclick=()=>{setPage('tasks');taskFilter='all';render();$('#taskSearch')?.focus()};
  $('#themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';save();render();toast(state.theme==='dark'?'Đã bật giao diện tối.':'Đã bật giao diện sáng.');};
- $('#view').addEventListener('click',e=>{if(e.target.matches('[data-minutes]')){if(timerRunning)return;timerMode=Number(e.target.dataset.minutes)*60;timerLeft=timerMode;state.focusTimer={running:false,left:timerLeft,mode:timerMode};save();$$('[data-minutes]').forEach(b=>b.classList.toggle('active',b===e.target));updateTimerDisplay()}if(e.target.id==='timerToggle')startTimer();if(e.target.id==='timerReset')resetTimer()});
+ $('#view').addEventListener('click',e=>{if(e.target.matches('[data-minutes]')){if(timerRunning)return;timerMode=Number(e.target.dataset.minutes)*60;timerLeft=timerMode;state.focusTimer={running:false,left:timerLeft,mode:timerMode};save();$$('[data-minutes]').forEach(b=>b.classList.toggle('active',b===e.target));updateTimerDisplay()}if(e.target.id==='timerToggle')startTimer();if(e.target.id==='timerReset')resetTimer();if(e.target.id==='enableNotifications')enableTaskNotifications();if(e.target.id==='exportAllReminders')exportRemindersToCalendar(reminderTasks())});
  $('#view').addEventListener('click',e=>{if(e.target.id==='saveName'){const v=$('#nameInput').value.trim();if(v){state.userName=v;save();render();toast('Đã cập nhật hồ sơ.')}}if(e.target.id==='exportData'){exportBackup()}});
  $('#view').addEventListener('change',e=>{if(e.target.id==='importData'){const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data||!Array.isArray(data.tasks)||!Array.isArray(data.habits)||!Array.isArray(data.goals))throw new Error('invalid');confirmBox('Khôi phục dữ liệu?','Dữ liệu hiện tại sẽ được thay thế bằng nội dung trong file sao lưu.', 'Khôi phục',()=>{state={...defaults(),...data,rpg:{...defaults().rpg,...(data.rpg||{})}};if(!Array.isArray(state.brainNotes))state.brainNotes=[];save();setPage('dashboard');toast('Khôi phục dữ liệu thành công.')})}catch(err){toast('File không đúng định dạng DAYMARK.')}};reader.readAsText(f)}});
  $('#view').addEventListener('click',e=>{if(e.target.id==='resetData')confirmBox('Bắt đầu lại từ đầu?','Toàn bộ dữ liệu hiện tại sẽ bị thay thế bằng dữ liệu mẫu. Hãy xuất bản sao lưu trước nếu cần.', 'Làm mới',()=>{state=defaults();save();setPage('dashboard');toast('Đã khôi phục dữ liệu mẫu.')})});
@@ -488,11 +659,269 @@ function boot(){
  document.body.classList.toggle('dark',state.theme==='dark');
  if('serviceWorker' in navigator && location.protocol!=='file:'){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
  if(state.lastVisit!==today()){state.lastVisit=today();save()}
- bindGlobal();restoreTimer();render();
- document.addEventListener('visibilitychange',()=>{if(!document.hidden&&timerRunning)updateTimerDisplay()});
+ bindGlobal();restoreTimer();render();startReminderChecks();
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(timerRunning){updateTimerDisplay();if(focusOverlayOpen)requestFocusWakeLock();}checkTaskReminders();}});
+ window.addEventListener('pagehide',()=>{releaseFocusWakeLock();});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();const tag=document.activeElement?.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag))return;if(e.key.toLowerCase()==='n'){e.preventDefault();addTask()}if(e.key==='/'){e.preventDefault();setPage('tasks');taskFilter='all';render();$('#taskSearch')?.focus()}})
 }
+// ====================== DAYMARK 3.0: CLOUD SYNC + AI ======================
+const DAYMARK_V3 = '3.0.0';
+const cloud = { client:null, user:null, channel:null, ready:false, syncing:false, dirty:false, localRevision:0, remoteVersion:null, pendingRemote:null, timer:null, lastSync:null, status:'Chưa kết nối', suppress:false, handlingUser:null };
+const aiScope = { profile:false, tasks:false, goals:false, habits:false, focus:false, notes:false, journal:false };
+let aiDraft='', aiMode='coach', aiBusy=false, aiMessages=[];
+
+function cloudConfigured(){
+ const c=window.DAYMARK_CONFIG||{};
+ return !!(c.SUPABASE_URL && c.SUPABASE_ANON_KEY && /^https:\/\//.test(c.SUPABASE_URL));
+}
+function updateCloudBadge(){
+ const b=$('#cloudAccountBtn'); if(!b)return;
+ if(cloud.user){b.textContent=cloud.syncing?'☁ Đang đồng bộ…':cloud.dirty?'☁ Chờ đồng bộ':cloud.pendingRemote?'⚠ Xung đột':'☁ '+(cloud.status==='Đã đồng bộ'?'Đã đồng bộ':'Đã đăng nhập');b.title=cloud.user.email||'Tài khoản DAYMARK';}
+ else b.textContent=cloudConfigured()?'☁ Đăng nhập':'☁ Thiết lập cloud';
+}
+function cloudStatusHtml(){
+ const cls=cloud.pendingRemote?'warn':(cloud.user&&cloud.ready&&!cloud.dirty?'ok':'');
+ const label=cloud.pendingRemote?'Cần xử lý xung đột':cloud.syncing?'Đang đồng bộ…':cloud.dirty?'Có thay đổi chờ đồng bộ':cloud.user?(cloud.ready?'Đã đồng bộ':'Đang kết nối'):cloudConfigured()?'Chưa đăng nhập':'Chưa cấu hình';
+ const dot=cls==='ok'?'ok':cls==='warn'?'warn':'';
+ return `<span class="cloud-status"><i class="cloud-dot ${dot}"></i>${esc(label)}</span>`;
+}
+function normalizeCloudState(data){
+ const base=defaults();const x=(data&&typeof data==='object')?data:{};
+ const merged={...base,...x};
+ for(const k of ['tasks','habits','goals','journal','sessions','brainNotes','coachNotes','rewardKeys']) if(!Array.isArray(x[k])) merged[k]=base[k];
+ merged.rpg={...base.rpg,...(x.rpg||{})};
+ if(!Array.isArray(merged.rpg.redeemed))merged.rpg.redeemed=[];
+ if(!merged.rpg.claimed||typeof merged.rpg.claimed!=='object')merged.rpg.claimed={};
+ return merged;
+}
+function recoveryBackup(){
+ try{
+  const payload={savedAt:new Date().toISOString(),source:'DAYMARK 2.1 local data before DAYMARK 3.0 cloud migration',state:JSON.parse(JSON.stringify(state))};
+  // Keep one recovery snapshot to reduce localStorage quota pressure.
+  localStorage.setItem('daymark-v3-last-recovery',JSON.stringify(payload));
+  return true;
+ }catch(e){
+  console.error('Could not store recovery snapshot',e);
+  toast('Không tạo được bản sao lưu phục hồi. DAYMARK giữ nguyên dữ liệu hiện tại và chưa thay bằng dữ liệu Cloud. Hãy xuất JSON rồi thử lại.');
+  return false;
+ }
+}
+function applyCloudState(data,updatedAt){
+ if(!recoveryBackup())return false;
+ cloud.suppress=true;
+ try{
+  const nextState=normalizeCloudState(data);
+  const serialized=JSON.stringify(nextState);
+  // Write new state only after the recovery snapshot succeeded.
+  localStorage.setItem(STORAGE_KEY,serialized);
+  state=nextState;
+  currentPage=state.page||'dashboard';
+  cloud.remoteVersion=updatedAt||null;cloud.lastSync=new Date().toISOString();cloud.dirty=false;cloud.pendingRemote=null;cloud.ready=true;cloud.status='Đã đồng bộ';
+  document.body.classList.toggle('dark',state.theme==='dark');
+  render();
+  return true;
+ }catch(e){
+  console.error('Could not apply cloud state',e);
+  toast('Không thể khôi phục dữ liệu Cloud vào bộ nhớ thiết bị. Dữ liệu cũ vẫn được giữ; hãy xuất backup và kiểm tra dung lượng.');
+  return false;
+ }finally{cloud.suppress=false;}
+}
+
+function hasLocalWork(){
+ return !!((state.tasks||[]).length||(state.habits||[]).length||(state.goals||[]).length||(state.journal||[]).length||(state.brainNotes||[]).length||(state.sessions||[]).length||(state.xp||0));
+}
+function showCloudConflict(remoteRow,reason='Một thiết bị khác vừa cập nhật dữ liệu.'){
+ if(!remoteRow||!remoteRow.state_data)return;
+ cloud.pendingRemote=remoteRow;cloud.dirty=true;cloud.status='Cần xử lý xung đột';updateCloudBadge();
+ const useRemote=window.confirm(`${reason}\n\nOK: dùng dữ liệu Cloud và thay dữ liệu đang mở trên thiết bị này.\nHủy: giữ dữ liệu trên thiết bị này và ghi đè lên Cloud sau khi xác nhận.`);
+ if(useRemote){if(applyCloudState(remoteRow.state_data,remoteRow.updated_at))toast('Đã tải phiên bản Cloud mới nhất.');}
+ else{cloud.remoteVersion=remoteRow.updated_at;cloud.pendingRemote=null;cloud.dirty=true;toast('Đã giữ dữ liệu trên thiết bị. Đang chuẩn bị đồng bộ lên Cloud…');scheduleCloudSync(250);}
+}
+async function syncNow(){
+ if(!cloud.client||!cloud.user||!cloud.ready)return;
+ if(!navigator.onLine){cloud.dirty=true;cloud.status='Đang offline';updateCloudBadge();return;}
+ if(cloud.syncing)return;
+ cloud.syncing=true;updateCloudBadge();
+ const revisionAtStart=cloud.localRevision;
+ let requestSucceeded=false;
+ let snapshot;
+ try{snapshot=JSON.parse(JSON.stringify(state));}
+ catch(e){cloud.syncing=false;cloud.dirty=true;cloud.status='Không thể đóng gói dữ liệu';updateCloudBadge();toast('Không thể chuẩn bị dữ liệu để đồng bộ.');return;}
+ try{
+  const expected=cloud.remoteVersion;
+  const {data,error}=await cloud.client.rpc('save_daymark_state',{p_state:snapshot,p_expected_updated_at:expected});
+  if(error)throw error;
+  const row=Array.isArray(data)?data[0]:data;
+  if(!row)throw new Error('Không nhận được kết quả đồng bộ từ máy chủ.');
+  if(row.conflict){cloud.syncing=false;cloud.pendingRemote=null;showCloudConflict({state_data:row.state_data,updated_at:row.updated_at},'Dữ liệu Cloud đã thay đổi trước khi bản này kịp đồng bộ.');return;}
+  requestSucceeded=true;
+  cloud.remoteVersion=row.updated_at;cloud.lastSync=new Date().toISOString();
+  if(cloud.localRevision===revisionAtStart){cloud.dirty=false;cloud.status='Đã đồng bộ';}
+  else{cloud.dirty=true;cloud.status='Có chỉnh sửa mới, đang chờ đồng bộ';}
+ }catch(e){console.error('DAYMARK cloud sync error:',e);cloud.dirty=true;cloud.status='Lỗi đồng bộ';toast('Không đồng bộ được. Dữ liệu vẫn còn trên thiết bị; hãy thử lại khi mạng ổn định.');}
+ finally{
+  cloud.syncing=false;
+  const deferred=cloud.pendingRemote;
+  if(deferred&&deferred.updated_at!==cloud.remoteVersion){cloud.pendingRemote=null;setTimeout(()=>showCloudConflict(deferred,'Có cập nhật Cloud phát sinh trong lúc đồng bộ.'),0);}
+  else if(deferred&&deferred.updated_at===cloud.remoteVersion)cloud.pendingRemote=null;
+  updateCloudBadge();if(currentPage==='settings')render();
+  // If the local state changed while the request was in flight, send the newer snapshot too.
+  if(requestSucceeded&&cloud.dirty&&cloud.ready&&cloud.user&&!cloud.pendingRemote&&navigator.onLine)scheduleCloudSync(350);
+ }
+}
+
+function scheduleCloudSync(delay=1300){
+ if(cloud.suppress||!cloud.user||!cloud.ready)return;
+ cloud.dirty=true;cloud.status=navigator.onLine?'Chờ đồng bộ':'Đang offline';updateCloudBadge();
+ clearTimeout(cloud.timer);cloud.timer=setTimeout(()=>syncNow(),delay);
+}
+async function subscribeCloud(){
+ if(!cloud.client||!cloud.user)return;
+ if(cloud.channel){await cloud.client.removeChannel(cloud.channel).catch(()=>{});cloud.channel=null;}
+ cloud.channel=cloud.client.channel('daymark-sync-'+cloud.user.id)
+  .on('postgres_changes',{event:'*',schema:'public',table:'daymark_states',filter:'user_id=eq.'+cloud.user.id},payload=>{
+   const row=payload.new;if(!row||!row.state_data)return;
+   if(row.updated_at===cloud.remoteVersion)return;
+   if(cloud.syncing){cloud.pendingRemote=row;return;}
+   if(cloud.pendingRemote&&cloud.pendingRemote.updated_at===row.updated_at)return;
+   if(cloud.dirty||cloud.pendingRemote){showCloudConflict(row,'Một thay đổi khác vừa xuất hiện trên Cloud.');return;}
+   if(applyCloudState(row.state_data,row.updated_at))toast('Đã nhận cập nhật từ thiết bị khác.');
+   else{cloud.pendingRemote=row;cloud.status='Cần xử lý bản sao lưu trước khi tải Cloud';updateCloudBadge();}
+  })
+  .subscribe(status=>{if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){cloud.status='Realtime chưa sẵn sàng';updateCloudBadge();}});
+}
+async function resolveFirstCloudSync(user){
+ cloud.status='Đang tải dữ liệu Cloud';updateCloudBadge();
+ const {data:row,error}=await cloud.client.from('daymark_states').select('state_data,updated_at').eq('user_id',user.id).maybeSingle();
+ if(error)throw error;
+ if(!row){
+  if(!recoveryBackup())throw new Error('Không tạo được bản sao lưu trước khi đồng bộ. Hãy xuất JSON rồi thử lại.');
+  cloud.remoteVersion=null;cloud.ready=true;cloud.dirty=true;cloud.status='Đang đưa dữ liệu thiết bị lên Cloud';
+  await syncNow();return;
+ }
+ const hasLocal=hasLocalWork();
+ if(hasLocal){
+  const useCloud=window.confirm('DAYMARK tìm thấy dữ liệu đã có trên Cloud.\n\nOK: tải dữ liệu Cloud xuống thiết bị này.\nHủy: giữ dữ liệu hiện tại của thiết bị và đồng bộ nó lên Cloud.\n\nTrước khi thay dữ liệu, DAYMARK sẽ tạo bản sao lưu cục bộ.');
+  if(useCloud){if(!applyCloudState(row.state_data,row.updated_at))throw new Error('Không thể tạo bản sao lưu/khôi phục Cloud. Dữ liệu cũ vẫn được giữ.');}
+  else{if(!recoveryBackup())throw new Error('Không thể tạo bản sao lưu. Hãy xuất JSON rồi thử lại.');cloud.remoteVersion=row.updated_at;cloud.ready=true;cloud.dirty=true;await syncNow();}
+ }else{if(!applyCloudState(row.state_data,row.updated_at))throw new Error('Không thể tạo bản sao lưu/khôi phục Cloud. Dữ liệu cũ vẫn được giữ.');}
+}
+async function handleCloudUser(user){
+ if(!user){
+  if(cloud.channel&&cloud.client){await cloud.client.removeChannel(cloud.channel).catch(()=>{});cloud.channel=null;}
+  cloud.user=null;cloud.ready=false;cloud.remoteVersion=null;cloud.pendingRemote=null;cloud.status='Đã đăng xuất';cloud.handlingUser=null;updateCloudBadge();return;
+ }
+ if(cloud.handlingUser===user.id&&(cloud.ready||cloud.status==='Đang kết nối'||cloud.status==='Đang tải dữ liệu Cloud'))return;
+ cloud.handlingUser=user.id;cloud.user=user;cloud.ready=false;cloud.status='Đang kết nối';updateCloudBadge();
+ try{await resolveFirstCloudSync(user);await subscribeCloud();}
+ catch(e){console.error('DAYMARK auth/sync error:',e);cloud.ready=false;cloud.status='Lỗi cấu hình hoặc quyền truy cập';toast('Kết nối Cloud chưa hoàn tất. Kiểm tra SQL, URL và khóa publishable/anon.');}
+ updateCloudBadge();if(currentPage==='settings')render();
+}
+async function initDaymarkCloud(){
+ if(!cloudConfigured()){cloud.status='Chưa cấu hình';updateCloudBadge();return;}
+ if(!window.supabase?.createClient){cloud.status='Không tải được Supabase SDK';updateCloudBadge();return;}
+ const cfg=window.DAYMARK_CONFIG;
+ cloud.client=window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ cloud.client.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>handleCloudUser(session?.user||null),0);});
+ const {data,error}=await cloud.client.auth.getSession();
+ if(error){cloud.status='Lỗi xác thực';updateCloudBadge();return;}
+ await handleCloudUser(data.session?.user||null);
+}
+function openCloudAccount(){
+ if(!cloudConfigured()){
+  openModal('Thiết lập DAYMARK Cloud',`<p class="card-meta" style="line-height:1.7">Trước hết, mở file <b>supabase-config.js</b> trong VS Code và điền <b>Project URL</b> cùng <b>Publishable/anon key</b> lấy từ Supabase Dashboard. Đây là khóa công khai dành cho trình duyệt; tuyệt đối không dùng service_role hoặc secret key ở đây.</p><p class="card-meta">Sau đó tải file đã cập nhật lên GitHub Pages và tải lại DAYMARK.</p><div class="field"><label>Hướng dẫn đầy đủ</label><p><a href="./SETUP_DAYMARK_3.0.md" target="_blank" rel="noopener">Mở hướng dẫn triển khai DAYMARK 3.0</a></p></div>`,'Đóng',()=>closeModal(),true);return;
+ }
+ if(cloud.user){
+  openModal('Tài khoản DAYMARK Cloud',`<p class="card-meta">Đang đăng nhập: <b>${esc(cloud.user.email||'Tài khoản')}</b></p><p class="card-meta">${esc(cloud.status)}${cloud.lastSync?' · Lần đồng bộ gần nhất: '+esc(new Date(cloud.lastSync).toLocaleString('vi-VN')):''}</p><div class="settings-row"><div><strong>Đồng bộ ngay</strong><p>Đẩy các thay đổi đang chờ lên Cloud.</p></div><button type="button" class="soft-btn" id="modalSyncNow">Đồng bộ</button></div>`,'Đăng xuất',async()=>{closeModal();if(cloud.dirty)await syncNow();await cloud.client.auth.signOut();toast('Đã đăng xuất. Dữ liệu cục bộ vẫn được giữ.');},true);
+  $('#modalSyncNow')?.addEventListener('click',()=>syncNow());return;
+ }
+ openModal('Đăng nhập DAYMARK Cloud',`<p class="card-meta" style="line-height:1.6">Dùng cùng một tài khoản trên máy tính và iPhone để đồng bộ. Khi đăng nhập, toàn bộ dữ liệu DAYMARK của tài khoản này — gồm công việc, mục tiêu, thói quen, ghi chú, nhật ký, phiên tập trung và tiến trình RPG — sẽ được lưu trong dự án Supabase của bạn. Mật khẩu được gửi trực tiếp tới Supabase Auth qua HTTPS, không lưu trong DAYMARK.</p><div class="field"><label>Email</label><input name="email" type="email" required maxlength="180" autocomplete="email" placeholder="you@example.com"></div><div class="field"><label>Mật khẩu</label><input name="password" type="password" required minlength="8" maxlength="128" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div><div class="field"><label>Hành động</label><select name="authMode"><option value="signin">Đăng nhập tài khoản có sẵn</option><option value="signup">Tạo tài khoản mới</option></select></div><label class="ai-consent"><input type="checkbox" name="cloudDataConsent" required><span><b>Tôi đồng ý lưu bản dữ liệu DAYMARK đầy đủ lên Supabase</b> để đồng bộ giữa các thiết bị. Tôi đã xuất bản sao lưu riêng và hiểu rằng đăng xuất chỉ dừng đồng bộ, không tự xóa bản Cloud.</span></label><p class="card-meta">Nếu bật xác nhận email trong Supabase, bạn cần xác nhận email trước khi đăng nhập lần đầu.</p>`,'Tiếp tục',async fd=>{
+  if(fd.get('cloudDataConsent')!=='on'){toast('Bạn cần xác nhận việc lưu dữ liệu trên Cloud.');return;}
+  const email=String(fd.get('email')||'').trim(),password=String(fd.get('password')||''),mode=String(fd.get('authMode'));
+  if(!email||password.length<8){toast('Hãy nhập email và mật khẩu hợp lệ.');return;}
+  const submit=$('#modalForm button[type="submit"]');if(submit){submit.disabled=true;submit.textContent='Đang kết nối…';}
+  try{
+   let result;
+   if(mode==='signup')result=await cloud.client.auth.signUp({email,password,options:{emailRedirectTo:location.href}});
+   else result=await cloud.client.auth.signInWithPassword({email,password});
+   if(result.error)throw result.error;
+   closeModal();
+   if(mode==='signup'&&!result.data.session){toast('Tài khoản đã tạo. Hãy mở email xác nhận, sau đó đăng nhập.');return;}
+   if(result.data.user)await handleCloudUser(result.data.user);
+   toast(mode==='signup'?'Tạo tài khoản thành công.':'Đăng nhập thành công.');
+  }catch(e){console.error(e);if(submit){submit.disabled=false;submit.textContent='Tiếp tục';}toast('Không thể đăng nhập: '+(e.message||'hãy kiểm tra thông tin và cấu hình Supabase.'));}
+ },true);
+}
+
+function renderCloudSettingsCard(){
+ const logged=cloud.user;
+ const actions=logged?`<div class="cloud-actions"><button class="primary-btn" data-dm="sync-now">↻ Đồng bộ ngay</button><button class="soft-btn" data-dm="signout">Đăng xuất</button></div>`:`<div class="cloud-actions"><button class="primary-btn" data-dm="account">${cloudConfigured()?'Đăng nhập / tạo tài khoản':'Thiết lập kết nối'}</button></div>`;
+ return `<section class="cloud-panel"><div class="card-head"><div><div class="card-title">☁ DAYMARK Cloud Sync</div><div class="card-meta" style="margin-top:4px">Tài khoản và đồng bộ tự động giữa máy tính, iPhone và thiết bị khác.</div></div>${cloudStatusHtml()}</div><p class="card-meta" style="line-height:1.65;margin:10px 0">${logged?'Đang dùng tài khoản '+esc(cloud.user.email||'đã đăng nhập')+'. Thay đổi được lưu cục bộ trước, sau đó đồng bộ lên Cloud.':'Bạn cần cấu hình Supabase và đăng nhập cùng một tài khoản trên các thiết bị.'}</p>${actions}<div class="divider"></div><div class="card-meta" style="line-height:1.6">${cloud.pendingRemote?'Có cập nhật xung đột cần bạn chọn phiên bản.':cloud.dirty?'Một số thay đổi đang chờ mạng hoặc đồng bộ.':cloud.lastSync?'Đồng bộ gần nhất: '+esc(new Date(cloud.lastSync).toLocaleString('vi-VN')):'Chưa có lần đồng bộ nào.'}</div><p class="card-meta" style="margin-top:8px">Bản sao lưu phục hồi trước khi chuyển dữ liệu được giữ trên thiết bị này trong localStorage với khóa <code>daymark-v3-last-recovery</code>.</p></section>`;
+}
+function renderAiSettingsCard(){return `<section class="cloud-panel"><div class="card-head"><div><div class="card-title">✦ Trợ lý cục bộ miễn phí</div><div class="card-meta" style="margin-top:4px">Không cần OpenAI API hoặc thẻ thanh toán</div></div><span class="tag">NO API</span></div><p class="card-meta" style="line-height:1.65;margin:10px 0">Tính năng AI trả phí đang tạm dừng theo lựa chọn của bạn. Trợ lý cục bộ vẫn phân tích các dữ liệu đơn giản ngay trên thiết bị. Không có yêu cầu gửi dữ liệu sang mô hình AI bên ngoài.</p></section>`;}
+function renderNotificationSettingsCard(){return `<section class="cloud-panel"><div class="card-head"><div><div class="card-title">🔔 Thông báo & nhắc việc</div><div class="card-meta" style="margin-top:4px">Quản lý quyền thông báo và lịch nhắc</div></div><span class="tag">${notificationPermission()==='granted'?'ĐÃ BẬT':'CHƯA BẬT'}</span></div><p class="card-meta" style="line-height:1.65;margin:10px 0">Bật thông báo bằng thao tác chủ động. Nhắc việc khi ứng dụng đóng nên được thêm vào Apple Calendar/Google Calendar để hệ điều hành phát báo đúng giờ.</p><div class="cloud-actions"><button class="primary-btn" id="enableNotifications">${notificationPermission()==='granted'?'✓ Đã bật thông báo':'Bật thông báo'}</button><button class="soft-btn" data-goto="reminders">Mở trung tâm nhắc việc</button></div></section>`;}
+
+const daymarkRenderSettingsV2=renderSettings;
+renderSettings=function(){
+ let html=daymarkRenderSettingsV2();
+ html=html.replace('<div class="coach-grid">','<div class="coach-grid">'+renderCloudSettingsCard()+renderNotificationSettingsCard()+renderAiSettingsCard());
+ html=html.replace('Nội dung nằm trong bộ nhớ trình duyệt hiện tại, không tự gửi lên máy chủ.','Dữ liệu được lưu cục bộ và đồng bộ lên Supabase riêng của tài khoản khi bạn đăng nhập.');
+ html=html.replace('Mỗi thiết bị có bộ nhớ riêng. Dùng Xuất dữ liệu trên máy cũ và Nhập dữ liệu trên máy mới để chuyển dữ liệu.','Dùng cùng tài khoản Supabase trên các thiết bị. DAYMARK phát hiện xung đột thay vì âm thầm ghi đè.');
+ html=html.replace('Gợi ý mặc định chạy bằng quy tắc cục bộ. Chỉ khi bạn bấm Chia sẻ thì nội dung tóm tắt mới được đưa sang ứng dụng khác.','Trợ lý cục bộ chạy trên thiết bị; tích hợp AI API đang tạm dừng để không phát sinh phí.');
+ return html;
+};
+
+function aiContextFromSelection(){
+ const c={};
+ if(aiScope.profile)c.profile={level:level(),xp:Number(state.xp)||0};
+ if(aiScope.tasks)c.tasks=(state.tasks||[]).slice(0,50).map(t=>({title:String(t.title||'').slice(0,140),area:String(t.area||'').slice(0,40),due:t.due||null,priority:t.priority||'medium',completed:!!t.completed,estimate:Number(t.estimate)||25}));
+ if(aiScope.goals)c.goals=(state.goals||[]).slice(0,30).map(g=>({title:String(g.title||'').slice(0,140),progress:Number(g.progress)||0,deadline:g.deadline||null,why:String(g.why||'').slice(0,350),milestones:(g.milestones||[]).slice(0,12).map(m=>({text:String(m.text||'').slice(0,120),done:!!m.done}))}));
+ if(aiScope.habits)c.habits=(state.habits||[]).slice(0,30).map(h=>({name:String(h.name||'').slice(0,80),last14Days:Object.fromEntries(Object.entries(h.history||{}).filter(([d])=>d>=dateAdd(today(),-13)&&d<=today()).slice(0,14))}));
+ if(aiScope.focus)c.focus=(state.sessions||[]).filter(x=>x.date>=dateAdd(today(),-29)).slice(-80).map(x=>({date:x.date,minutes:Number(x.minutes)||0,label:String(x.label||'').slice(0,60)}));
+ if(aiScope.notes)c.notes=(state.brainNotes||[]).slice(-20).map(n=>({title:String(n.title||'').slice(0,120),content:String(n.content||'').slice(0,1200),tags:(n.tags||[]).slice(0,8),folder:String(n.folder||'').slice(0,60)}));
+ if(aiScope.journal)c.journal=(state.journal||[]).slice(-10).map(j=>({date:j.date,title:String(j.title||'').slice(0,100),text:String(j.text||'').slice(0,700),mood:String(j.mood||'').slice(0,50)}));
+ return c;
+}
+function renderAiMessages(){return aiMessages.map(m=>`<div class="ai-message ${m.role==='user'?'user':'assistant'}"><span class="ai-role">${m.role==='user'?'BẠN':'DAYMARK AI'}</span>${esc(m.text)}</div>`).join('');}
+function renderCoach(){
+ const ideas=coachInsights();
+ const priority=state.tasks.filter(t=>!t.completed).sort((a,b)=>({high:0,medium:1,low:2}[a.priority]??1)-({high:0,medium:1,low:2}[b.priority]??1)).slice(0,4);
+ return `<div class="page">${pageHead('ON-DEVICE · FREE','Trợ lý phát triển','Gợi ý dựa trên dữ liệu đang lưu trên thiết bị. Không gọi OpenAI API, không cần API key và không phát sinh phí.')}<section class="coach-hero"><div class="coach-chip">✦ LOCAL COACH · NO API</div><h2>Không cần AI trả phí để bắt đầu giữ kỷ luật.</h2><p>DAYMARK dùng các quy tắc đơn giản để nhận diện việc tồn đọng, thời gian tập trung và thói quen. Đây không phải mô hình AI hội thoại, nhưng hoạt động miễn phí ngay trên thiết bị.</p></section><div class="stats-grid" style="margin-top:16px"><div class="stat-card"><div class="stat-ico" style="background:#eae6ff">☑</div><div><div class="stat-value">${doneToday()}</div><div class="stat-label">Việc xong hôm nay</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#e3f7ef">◷</div><div><div class="stat-value">${minutesFocused()}m</div><div class="stat-label">Tập trung hôm nay</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#fff0e7">✳</div><div><div class="stat-value">${allHabitDone()}</div><div class="stat-label">Thói quen hôm nay</div></div></div><div class="stat-card"><div class="stat-ico" style="background:#e9f2ff">◎</div><div><div class="stat-value">${state.goals.filter(g=>g.progress>=100).length}</div><div class="stat-label">Mục tiêu hoàn tất</div></div></div></div><div class="coach-grid" style="margin-top:16px"><section class="card"><div class="card-head"><div><div class="card-title">🧭 Điều DAYMARK nhận thấy</div><div class="card-meta">Phân tích cục bộ từ dữ liệu của bạn</div></div><span class="tag">Miễn phí</span></div>${ideas.map(x=>`<div class="coach-advice"><div class="coach-advice-icon">${x.icon}</div><div style="flex:1"><b style="font-size:12px">${esc(x.title)}</b><p>${esc(x.text)}</p><button class="text-btn" data-goto="${x.page}">${esc(x.cta)} →</button></div></div>`).join('')}</section><section class="card"><div class="card-head"><div><div class="card-title">🎯 Những việc nên xử lý trước</div><div class="card-meta">Sắp xếp theo mức ưu tiên</div></div></div>${priority.map((t,i)=>`<div class="coach-advice"><div class="coach-advice-icon">${i+1}</div><div><b style="font-size:12px">${esc(t.title)}</b><p>${esc(t.area||'Cá nhân')} · ${t.estimate||25} phút · ${esc(t.due||'Chưa đặt ngày')}</p></div></div>`).join('')||'<div class="empty">Bạn đang không có việc tồn đọng. Hãy nghỉ ngơi hoặc lên kế hoạch mới.</div>'}</section></div><section class="card" style="margin-top:16px"><div class="card-title">📝 Tự hỏi để bắt đầu</div><div class="field" style="margin-top:12px"><label>Điều gì đang khiến bạn trì hoãn?</label><textarea id="coachQuestionInput" placeholder="Viết vấn đề của bạn tại đây…">${esc(coachQuestion)}</textarea></div><button class="primary-btn" data-action="ask-coach">Nhận gợi ý cục bộ</button>${coachReply?`<div class="coach-reply">${esc(coachReply)}</div>`:''}</section></div>`;
+}
+async function runDaymarkAI(){toast('AI API đang tạm dừng ở DAYMARK 3.1 để tránh phát sinh chi phí. Trợ lý cục bộ vẫn dùng được.');}
+const originalSaveDaymark=save;
+save=function(){originalSaveDaymark();if(!cloud.suppress){cloud.localRevision++;scheduleCloudSync();}};
+const originalUpdateChromeDaymark=updateChrome;
+updateChrome=function(){originalUpdateChromeDaymark();updateCloudBadge();};
+const originalRenderDaymark=render;
+render=function(){originalRenderDaymark();updateCloudBadge();};
+const originalBindGlobalDaymark=bindGlobal;
+bindGlobal=function(){
+ originalBindGlobalDaymark();
+ $('#cloudAccountBtn')?.addEventListener('click',openCloudAccount);
+ $('#view')?.addEventListener('click',e=>{
+  const b=e.target.closest('[data-dm]');if(!b)return;
+  const action=b.dataset.dm;
+  if(action==='account')openCloudAccount();
+  if(action==='sync-now')syncNow();
+  if(action==='signout'){
+   if(window.confirm('Đăng xuất DAYMARK Cloud? Dữ liệu cục bộ vẫn được giữ.')){(async()=>{if(cloud.dirty){await syncNow();if(cloud.dirty&&!window.confirm('Một số thay đổi chưa đồng bộ. Đăng xuất vẫn giữ dữ liệu trên thiết bị này, nhưng các thay đổi chưa lên Cloud. Bạn có chắc muốn đăng xuất?'))return;}await cloud.client?.auth.signOut();toast('Đã đăng xuất.');})();}
+  }
+  if(action==='ai-send')runDaymarkAI();
+  if(action==='ai-clear'){aiMessages=[];aiDraft='';render();}
+ });
+ $('#view')?.addEventListener('change',e=>{
+  const field=e.target.dataset?.aiScope;if(field&&Object.prototype.hasOwnProperty.call(aiScope,field)){aiScope[field]=e.target.checked;}
+  if(e.target.id==='aiModeSelect')aiMode=e.target.value;
+ });
+ $('#view')?.addEventListener('input',e=>{if(e.target.id==='aiQuestion')aiDraft=e.target.value;});
+};
+window.addEventListener('online',()=>{if(cloud.user&&cloud.dirty){cloud.status='Đang kết nối lại';scheduleCloudSync(400);}});
+window.addEventListener('offline',()=>{if(cloud.user){cloud.status='Đang offline';updateCloudBadge();}});
+// =========================================================================
+
 boot();
+initDaymarkCloud();
 })();
 </script>
 </body>
